@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :aba,
-  ecto_repos: [Aba.Repo]
+  ecto_repos: [Aba.Repo],
+  migration_primary_key: [name: :id, type: :binary_id]
 
 # Configures the endpoint
 config :aba, AbaWeb.Endpoint,

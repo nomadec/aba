@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :aba, Aba.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "phoenix",
+  password: "phoenix",
   database: "aba_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
@@ -25,8 +25,7 @@ config :aba, AbaWeb.Endpoint,
       "node_modules/webpack/bin/webpack.js",
       "--mode",
       "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
+      "--watch-stdin"
     ]
   ]
 
