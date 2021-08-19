@@ -8,22 +8,40 @@ defmodule AbaWeb.Router do
     plug :put_root_layout, {AbaWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Pow.Plug.Session, otp_app: :aba
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug AbaWeb.APIAuthPlug, otp_app: :aba
+  end
+
+  pipeline :api_protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: AbaWeb.APIAuthErrorHandler
+  end
+
+  scope "/api/v1", AbaWeb.API.V1, as: :api_v1 do
+    pipe_through :api
+
+    resources "/registration", RegistrationController, singleton: true, only: [:create]
+    resources "/session", SessionController, singleton: true, only: [:create]
+    post "/session/renew", SessionController, :renew
+  end
+
+  scope "/api/v1", AbaWeb.API.V1, as: :api_v1 do
+    pipe_through [:api, :api_protected]
+
+    resources "/session", SessionController, singleton: true, only: [:delete]
+
+    # Your protected API endpoints here
   end
 
   scope "/", AbaWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/*path", PageLive, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", AbaWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #

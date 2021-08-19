@@ -19,6 +19,11 @@ config :aba, AbaWeb.Endpoint,
   pubsub_server: Aba.PubSub,
   live_view: [signing_salt: "4KoJxzNw"]
 
+# Connfigure Pow for User Auth
+config :aba, :pow,
+  user: Aba.Users.User,
+  repo: Aba.Repo
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
