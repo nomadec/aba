@@ -10,7 +10,7 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-  <div id="root"></div>
     <%= @inner_content %>
+    <div id="root"></div>
   </body>
 </html>

@@ -83,7 +83,7 @@ const theme = createTheme({
 // }
 
 ReactDOM.render(
-  <AuthContextProvider>
+  <AuthContextProvider csrfToken={csrfToken}>
     <ThemeProvider theme={theme}>
       <Routes />
     </ThemeProvider>

@@ -118,7 +118,7 @@ const SignIn = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/forgot_password" variant="body2">
+              <Link to={`${URL_PATHS.RESET_PASSWORD}/new`} variant="body2">
                 Forgot password?
               </Link>
             </Grid>

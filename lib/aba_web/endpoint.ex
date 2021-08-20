@@ -50,5 +50,6 @@ defmodule AbaWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :aba
   plug AbaWeb.Router
 end

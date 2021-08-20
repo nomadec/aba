@@ -4,11 +4,9 @@ import AuthLayout from "../Layouts/AuthLayout";
 
 const SignUpPage = () => {
   return (
-    <div>
-      <AuthLayout>
-        <SignUp />
-      </AuthLayout>
-    </div>
+    <AuthLayout>
+      <SignUp />
+    </AuthLayout>
   );
 };
 
