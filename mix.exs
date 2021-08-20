@@ -6,6 +6,7 @@ defmodule Aba.MixProject do
       app: :aba,
       version: "0.1.0",
       elixir: "~> 1.7",
+      erlc_paths: ["erl_src"],
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -47,7 +48,14 @@ defmodule Aba.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:distillery, "~> 2.1"}
+      {:distillery, "~> 2.1"},
+      {:pow, "~> 1.0.24"},
+      {:swoosh, "~> 1.4"},
+      {:mail, ">= 0.0.0"},
+      {:hackney, "~> 1.9"},
+      {:cowlib, "~> 2.9.1", [env: :prod, hex: "cowlib", repo: "hexpm", override: true]},
+      {:gun, git: "https://github.com/ninenines/gun.git", tag: "2.0.0-pre.2"}
+
     ]
   end
 

@@ -19,6 +19,23 @@ config :aba, AbaWeb.Endpoint,
   pubsub_server: Aba.PubSub,
   live_view: [signing_salt: "4KoJxzNw"]
 
+# Connfigure Pow for User Auth
+config :aba, :pow,
+  user: Aba.Users.User,
+  repo: Aba.Repo,
+  extensions: [PowResetPassword, PowEmailConfirmation, PowAPICustomPlug],
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks,
+  mailer_backend: AbaWeb.Pow.Mailer,
+  web_mailer_module: AbaWeb,
+  web_module: AbaWeb
+
+# Configures the Swoosh Mailer client
+config :aba, AbaWeb.Pow.Mailer,
+  adapter: Swoosh.Adapters.Gmail
+  # access_token: {:system, GMAIL_API_ACCESS_TOKEN}
+config :aba, Aba.OAuth2.Google,
+  data_dir: "/priv/gcp/"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

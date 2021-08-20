@@ -45,33 +45,36 @@ window.liveSocket = liveSocket;
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import Routes from "./routes/Routes";
+import AuthContextProvider from "./contexts/AuthContext";
+import { createTheme, ThemeProvider } from "@material-ui/core";
 
-// const theme = createTheme({
-//   palette: {
-//     type: "light",
-//     primary: {
-//       main: "#1562E0",
-//       light: "#4193EA",
-//     },
-//     secondary: {
-//       main: "#A9DE52",
-//     },
-//     // error: {},
-//     // warning: {},
-//     info: {
-//       main: "#A8C1D3",
-//     },
-//     // success: {},
-//     text: {
-//       primary: "#000",
-//       secondary: "#000",
-//     },
-//     background: {
-//       paper: "#fff",
-//       default: "#E1EEF7",
-//     },
-//   },
-// });
+const theme = createTheme({
+  palette: {
+    type: "light",
+    // primary: {
+    //   main: "#1562E0",
+    //   light: "#4193EA",
+    // },
+    // secondary: {
+    //   main: "#A9DE52",
+    // },
+    // // error: {},
+    // // warning: {},
+    // info: {
+    //   main: "#A8C1D3",
+    // },
+    // // success: {},
+    // text: {
+    //   primary: "#000",
+    //   secondary: "#000",
+    // },
+    // background: {
+    //   paper: "#fff",
+    //   default: "#E1EEF7",
+    // },
+  },
+});
 
 // if (theme.palette.type === "light") {
 //   theme.palette.action.active = "#fff";
@@ -79,4 +82,11 @@ import * as ReactDOM from "react-dom";
 //   theme.palette.action.active = "#000";
 // }
 
-ReactDOM.render(<div>Main</div>, document.getElementById("root"));
+ReactDOM.render(
+  <AuthContextProvider csrfToken={csrfToken}>
+    <ThemeProvider theme={theme}>
+      <Routes />
+    </ThemeProvider>
+  </AuthContextProvider>,
+  document.getElementById("root")
+);
