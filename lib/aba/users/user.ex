@@ -20,6 +20,14 @@ defmodule Aba.Users.User do
     |> pow_extension_changeset(attrs)
     |> Ecto.Changeset.cast(attrs, [:role, :first_name, :last_name])
     |> Ecto.Changeset.validate_required([:role, :first_name, :last_name])
+    |> Ecto.Changeset.validate_inclusion(:role, ~w(consumer provider))
+  end
+
+  @spec changeset_role(Ecto.Schema.t() | Ecto.Changeset.t(), map()) :: Ecto.Changeset.t()
+  def changeset_role(user_or_changeset, attrs) do
+    user_or_changeset
+    |> Ecto.Changeset.cast(attrs, [:role])
+    |> Ecto.Changeset.validate_inclusion(:role, ~w(consumer provider admin))
   end
 
 end

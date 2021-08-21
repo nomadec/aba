@@ -116,7 +116,6 @@ const AuthContextProvider = ({ csrfToken, children }) => {
   // registration handled here. when registered, email will be sent with a link to confrim email address,
   // and only after user can sign, hence here we just display a message about request status
   async function signUp(userForm) {
-    userForm.role = "consumer";
     const headers = {};
     attach_headers([HEADERS.CONTENT_TYPE, HEADERS.CSRF], headers);
     const body = qs.stringify({ user: userForm });

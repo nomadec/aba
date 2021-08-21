@@ -2,11 +2,26 @@ defmodule Aba.Users do
   @moduledoc """
   The Users context.
   """
+  use Pow.Ecto.Context,
+  repo: Aba.Repo,
+  user: Aba.Users.User
 
-  import Ecto.Query, warn: false
-  alias Aba.Repo
+  alias Aba.{Repo, Users.User}
 
-  alias Aba.Users.User
+  # def authenticate(params), do: pow_authenticate(params)
+  # def create(params), do: pow_create(params)
+  # def update(user, params), do: pow_update(user, params)
+  # def delete(user), do: pow_delete(user)
+  # def get_by(clauses), do: pow_get_by(clauses)
+
+  def create(%{"email" => "admin@altbot.tech"} = params), do: create_admin(params)
+  def create(params), do: pow_create(params)
+
+  def authenticate(params), do: pow_authenticate(params)
+  def update(user, params), do: pow_update(user, params)
+  def delete(user), do: pow_delete(user)
+  def get_by(clauses), do: pow_get_by(clauses)
+
 
   @doc """
   Returns the list of users.
@@ -101,4 +116,21 @@ defmodule Aba.Users do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  @type t :: %User{}
+  @spec create_admin(map()) :: {:ok, t()} | {:error, Ecto.Changeset.t()}
+  def create_admin(params) do
+    %User{}
+    |> User.changeset(params)
+    |> User.changeset_role(%{role: "admin"})
+    |> Repo.insert()
+  end
+
+  @spec set_admin_role(t()) :: {:ok, t()} | {:error, Ecto.Changeset.t()}
+  def set_admin_role(user) do
+    user
+    |> User.changeset_role(%{role: "admin"})
+    |> Repo.update()
+  end
+
 end
