@@ -23,10 +23,31 @@ defmodule AbaWeb.Router do
     plug Pow.Plug.RequireAuthenticated, error_handler: AbaWeb.APIAuthErrorHandler
   end
 
+  pipeline :admin do
+    plug AbaWeb.EnsureRolePlug, :admin
+  end
+  pipeline :provider do
+    plug AbaWeb.EnsureRolePlug, [:admin, :provider]
+  end
+
+
+  scope "/api/v1", AbaWeb, as: :api_v1 do
+    pipe_through [:api]
+
+    resources "/services", ServiceController, only: [:index, :show]
+  end
 
   scope "/api/v1", AbaWeb, as: :api_v1 do
     pipe_through [:api, :api_protected]
 
+    resources "/users", UserController
+  end
+
+  scope "/api/v1", AbaWeb, as: :api_v1 do
+    # pipe_through [:api, :api_protected]
+    pipe_through [:api, :api_protected, :provider]
+
+    resources "/services", ServiceController, except: [:index, :show]
     resources "/users", UserController
   end
 

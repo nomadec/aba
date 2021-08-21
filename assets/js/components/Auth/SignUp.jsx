@@ -13,6 +13,13 @@ import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { URL_PATHS } from "./../../helpers/consts";
 import { useAuth } from "../../contexts/AuthContext";
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -98,6 +105,34 @@ const SignUp = () => {
                 )}
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <Controller
+                name="role"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <FormControl
+                    variant="outlined"
+                    required
+                    className={classes.formControl}
+                    style={{ width: "100%" }}
+                  >
+                    <InputLabel id="role_label">Role</InputLabel>
+                    <Select
+                      {...field}
+                      labelId="role_label"
+                      id="role"
+                      label="Role"
+                    >
+                      <MenuItem value="consumer">Consumer</MenuItem>
+                      <MenuItem value="provider">Provider</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <Controller
                 name="email"
