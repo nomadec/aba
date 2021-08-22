@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { createContext, useContext, useReducer } from "react";
+import { useHistory } from "react-router-dom";
 import {
   API_PATHS,
   APPOINTMENTS_CREATE,
   APPOINTMENTS_GET,
   APPOINTMENTS_GET_DETAILS,
   LOADING_STARTED,
+  PER_PAGE,
   SERVICES_CREATE,
   SERVICES_DROP_DETAILS,
   SERVICES_GET,
@@ -88,11 +90,18 @@ const reducer = (state = INIT_STATE, action) => {
 
 const DataContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
+  const history = useHistory();
 
   // fetch list of services from API
   async function getServices() {
+    const search = new URLSearchParams(history.location.search);
+    search.set("_limit", PER_PAGE);
+    history.push(`${history.location.pathname}?${search.toString()}`);
+
     dispatch({ type: LOADING_STARTED });
-    const resp = await supervise_rq(() => axios(API_PATHS.SERVICES));
+    const resp = await supervise_rq(() =>
+      axios(`${API_PATHS.SERVICES}/${window.location.search}`)
+    );
 
     if (resp.status === STATUS.SUCCESS) {
       dispatch({

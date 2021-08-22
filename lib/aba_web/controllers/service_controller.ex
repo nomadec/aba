@@ -6,8 +6,18 @@ defmodule AbaWeb.ServiceController do
 
   action_fallback AbaWeb.FallbackController
 
-  def index(conn, _params) do
-    services = Services.list_services()
+  @default_per_page "5"
+  @default_sort_by :inserted_at
+  @default_sort_order :asc
+
+  def index(conn, params) do
+    IO.inspect(params)
+    # %{"_q" => search_term, "_page" => page, "_limit" => per_page, "_sort" => sort_by "_order" => sort_order}
+    search_term = Map.get(params, "_q", nil)
+    sort_by = {Map.get(params, "_sort", @default_sort_by), Map.get(params, "_order", @default_sort_order)}
+    page = Map.get(params, "_page", "1")
+    per_page = Map.get(params, "_limit", @default_per_page)
+    services = Services.list_services(search_term, sort_by, String.to_integer(per_page), String.to_integer(page))
     render(conn, "index.json", services: services)
   end
 

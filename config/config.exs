@@ -11,6 +11,9 @@ config :aba,
   ecto_repos: [Aba.Repo],
   migration_primary_key: [name: :id, type: :binary_id]
 
+# Configures the Search, Sort & Pagination
+
+
 # Configures the endpoint
 config :aba, AbaWeb.Endpoint,
   url: [host: "localhost"],
