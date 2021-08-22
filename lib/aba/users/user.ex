@@ -10,6 +10,8 @@ defmodule Aba.Users.User do
 
     field :first_name, :string, null: false
     field :last_name, :string, null: false
+    has_many :services, Aba.Services.Service
+    has_many :appointments, Aba.Appointments.Appointment
 
     timestamps()
   end

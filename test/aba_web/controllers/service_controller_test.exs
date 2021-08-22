@@ -10,7 +10,7 @@ defmodule AbaWeb.ServiceControllerTest do
     location: "some location",
     name: "some name",
     price: 120.5,
-    provider_id: "7488a646-e31f-11e4-aace-600308960662"
+    user_id: "7488a646-e31f-11e4-aace-600308960662"
   }
   @update_attrs %{
     description: "some updated description",
@@ -18,9 +18,9 @@ defmodule AbaWeb.ServiceControllerTest do
     location: "some updated location",
     name: "some updated name",
     price: 456.7,
-    provider_id: "7488a646-e31f-11e4-aace-600308960668"
+    user_id: "7488a646-e31f-11e4-aace-600308960668"
   }
-  @invalid_attrs %{description: nil, duration: nil, location: nil, name: nil, price: nil, provider_id: nil}
+  @invalid_attrs %{description: nil, duration: nil, location: nil, name: nil, price: nil, user_id: nil}
 
   def fixture(:service) do
     {:ok, service} = Services.create_service(@create_attrs)
@@ -52,7 +52,7 @@ defmodule AbaWeb.ServiceControllerTest do
                "location" => "some location",
                "name" => "some name",
                "price" => 120.5,
-               "provider_id" => "7488a646-e31f-11e4-aace-600308960662"
+               "user_id" => "7488a646-e31f-11e4-aace-600308960662"
              } = json_response(conn, 200)["data"]
     end
 
@@ -78,7 +78,7 @@ defmodule AbaWeb.ServiceControllerTest do
                "location" => "some updated location",
                "name" => "some updated name",
                "price" => 456.7,
-               "provider_id" => "7488a646-e31f-11e4-aace-600308960668"
+               "user_id" => "7488a646-e31f-11e4-aace-600308960668"
              } = json_response(conn, 200)["data"]
     end
 

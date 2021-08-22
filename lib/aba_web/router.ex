@@ -29,6 +29,9 @@ defmodule AbaWeb.Router do
   pipeline :provider do
     plug AbaWeb.EnsureRolePlug, [:admin, :provider]
   end
+  pipeline :consumer do
+    plug AbaWeb.EnsureRolePlug, [:admin, :consumer]
+  end
 
 
   scope "/api/v1", AbaWeb, as: :api_v1 do
@@ -40,15 +43,21 @@ defmodule AbaWeb.Router do
   scope "/api/v1", AbaWeb, as: :api_v1 do
     pipe_through [:api, :api_protected]
 
+    resources "/appointments", AppointmentController, only: [:index, :show]
+
     resources "/users", UserController
   end
 
   scope "/api/v1", AbaWeb, as: :api_v1 do
-    # pipe_through [:api, :api_protected]
     pipe_through [:api, :api_protected, :provider]
 
     resources "/services", ServiceController, except: [:index, :show]
-    resources "/users", UserController
+  end
+
+  scope "/api/v1", AbaWeb, as: :api_v1 do
+    pipe_through [:api, :api_protected, :consumer]
+
+    resources "/appointments", AppointmentController, except: [:index, :show]
   end
 
   scope "/", AbaWeb do

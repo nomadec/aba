@@ -13,7 +13,7 @@ defmodule AbaWeb.ServiceController do
 
   def create(conn, %{"service" => service_params}) do
     current_user = Pow.Plug.current_user(conn)
-    service_params = Map.put(service_params, "provider_id", current_user.id)
+    service_params = Map.put(service_params, "user_id", current_user.id)
     with {:ok, %Service{} = service} <- Services.create_service(service_params) do
       conn
       |> put_status(:created)
@@ -30,7 +30,7 @@ defmodule AbaWeb.ServiceController do
   def update(conn, %{"id" => id, "service" => service_params}) do
     current_user = Pow.Plug.current_user(conn)
     service = Services.get_service!(id)
-    case service.provider_id === current_user.id do
+    case service.user_id === current_user.id do
       true ->
         with {:ok, %Service{} = service} <- Services.update_service(service, service_params) do
           render(conn, "show.json", service: service)
@@ -46,7 +46,7 @@ defmodule AbaWeb.ServiceController do
   def delete(conn, %{"id" => id}) do
     current_user = Pow.Plug.current_user(conn)
     service = Services.get_service!(id)
-    case service.provider_id === current_user.id do
+    case service.user_id === current_user.id do
       true ->
         with {:ok, %Service{}} <- Services.delete_service(service) do
           send_resp(conn, :no_content, "")

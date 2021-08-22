@@ -8,6 +8,7 @@ defmodule Aba do
   """
 
   # mix phx.gen.json Users User users email:string password_hash:string first_name:string last_name:string role:string email_confirmation_token:string email_confirmed_at:utc_datetime unconfirmed_email:string
-  # mix phx.gen.json Services Service services name:string provider_id:uuid price:float duration:integer location:string description:string
+  # mix phx.gen.json Services Service services name:string user_id:uuid price:float duration:integer location:string description:string
 
+  # mix phx.gen.json Appointments Appointment appointments user_id:references:users service_id:references:services date_time:utc_datetime paid:boolean
 end

@@ -24,8 +24,6 @@ defmodule AbaWeb.EnsureRolePlug do
   @doc false
   @spec call(Conn.t(), atom() | binary() | [atom()] | [binary()]) :: Conn.t()
   def call(conn, roles) do
-    IO.inspect(Plug.current_user(conn))
-    IO.inspect(roles)
     conn
     |> Plug.current_user()
     |> has_role?(roles)

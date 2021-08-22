@@ -11,6 +11,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import ServicesCreatePage from "../pages/ServicesCreatePage";
 import ServicesShowPage from "../pages/ServicesShowPage";
 import ServicesEditPage from "../pages/ServicesEditPage";
+import AppointmentsPage from "../pages/AppointmentsPage";
 
 const Routes = () => {
   return (
@@ -32,6 +33,12 @@ const Routes = () => {
           exact
           path={`${URL_PATHS.SERVICE_EDIT}/:id`}
           component={ServicesEditPage}
+        />
+
+        <ProtectedRoute
+          exact
+          path={URL_PATHS.APPOINTMENTS}
+          component={AppointmentsPage}
         />
 
         <Route exact path={URL_PATHS.SIGN_UP} component={SignUpPage} />

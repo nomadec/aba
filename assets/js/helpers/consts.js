@@ -6,10 +6,16 @@ export const API_SERVICES = `${API}/services`;
 
 export const URL_PATHS = {
   HOME: "/",
+
   SERVICES: "/services",
   SERVICE_CREATE: "/services/new",
   SERVICE_SHOW: "/services/show",
   SERVICE_EDIT: "/services/edit",
+
+  APPOINTMENTS: "/appointments",
+  APPOINTMENT_SHOW: "/appointments/show",
+  APPOINTMENT_EDIT: "/appointments/edit",
+
   SIGN_UP: "/signup",
   CONFIRM_EMAIL: "/confirm-email/:confirmation_token",
   SIGN_IN: "/session/new",
@@ -33,6 +39,7 @@ export const API_PATHS = {
   // api_v1_service_path  GET     /api/v1/services/:id/edit              AbaWeb.ServiceController :edit
   // api_v1_service_path  GET     /api/v1/services/new                   AbaWeb.ServiceController :new
   SERVICES: `${API}/services`,
+  APPOINTMENTS: `${API}/appointments`,
 };
 
 export const AUTH_ACTIONS = {
@@ -49,10 +56,14 @@ export const AUTH_ACTIONS = {
 export const LOADING_STARTED = "LOADING_STARTED";
 export const LOADING_ENDED = "LOADING_ENDED";
 
-export const SERVICES_GET = "SERVICES_GET";
 export const SERVICES_CREATE = "SERVICES_CREATE";
+export const SERVICES_GET = "SERVICES_GET";
 export const SERVICES_GET_DETAILS = "SERVICES_GET_DETAILS";
 export const SERVICES_DROP_DETAILS = "SERVICES_DROP_DETAILS";
+
+export const APPOINTMENTS_CREATE = "APPOINTMENTS_CREATE";
+export const APPOINTMENTS_GET = "APPOINTMENTS_GET";
+export const APPOINTMENTS_GET_DETAILS = "APPOINTMENTS_GET_DETAILS";
 
 export const STATUS = {
   SUCCESS: "success",

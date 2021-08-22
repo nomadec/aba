@@ -25,6 +25,7 @@ const ServiceForm = ({ action }) => {
 
   const form = {
     editable: false,
+    editMode: "",
     title: "Detailed View",
     button: null,
   };
@@ -35,6 +36,7 @@ const ServiceForm = ({ action }) => {
   }
   if (action === "edit") {
     form.editable = true;
+    form.editMode = true;
     form.title = "Edit Service";
     form.button = "Save Changes";
   }
@@ -84,9 +86,10 @@ const ServiceForm = ({ action }) => {
   );
 
   const renderEditableForm = loading ? (
-    <p>loading...</p>
+    <p>loading... {console.log("loading", serviceDetails)}</p>
   ) : (
     <Paper>
+      {console.log("loaded", serviceDetails)}
       <Container>
         <h4>{form.title}</h4>
         <form noValidate autoComplete="off" onSubmit={handleSubmit(submitForm)}>
@@ -94,7 +97,7 @@ const ServiceForm = ({ action }) => {
             name="name"
             required={true}
             control={control}
-            defaultValue={serviceDetails.name}
+            defaultValue={form.editMode && serviceDetails.name}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -109,7 +112,7 @@ const ServiceForm = ({ action }) => {
             name="price"
             required={true}
             control={control}
-            defaultValue={serviceDetails.price}
+            defaultValue={form.editMode && serviceDetails.price}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -124,7 +127,7 @@ const ServiceForm = ({ action }) => {
             name="duration"
             required={true}
             control={control}
-            defaultValue={serviceDetails.duration}
+            defaultValue={form.editMode && serviceDetails.duration}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -139,7 +142,7 @@ const ServiceForm = ({ action }) => {
             name="location"
             required={true}
             control={control}
-            defaultValue={serviceDetails.location}
+            defaultValue={form.editMode && serviceDetails.location}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -154,7 +157,7 @@ const ServiceForm = ({ action }) => {
             name="description"
             required={true}
             control={control}
-            defaultValue={serviceDetails.description}
+            defaultValue={form.editMode && serviceDetails.description}
             render={({ field }) => (
               <TextField
                 {...field}

@@ -5,7 +5,7 @@ defmodule Aba.Repo.Migrations.CreateServices do
     create table(:services, primary_key: false) do
       add :id, :uuid, primary_key: true
       add :name, :string
-      add :provider_id, :uuid
+      add :user_id, :uuid
       add :price, :float
       add :duration, :integer
       add :location, :string

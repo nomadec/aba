@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { createContext, useContext, useReducer } from "react";
 import {
   API_PATHS,
+  APPOINTMENTS_CREATE,
+  APPOINTMENTS_GET,
+  APPOINTMENTS_GET_DETAILS,
   LOADING_STARTED,
   SERVICES_CREATE,
   SERVICES_DROP_DETAILS,
@@ -17,20 +20,14 @@ export const useData = () => {
   return useContext(dataContext);
 };
 
-const dummyServiceDetails = {
-  name: "",
-  price: "",
-  duration: "",
-  location: "",
-  description: "",
-};
-
 const INIT_STATE = {
   loading: false,
   status: null,
   message: null,
   services: [],
-  serviceDetails: dummyServiceDetails,
+  serviceDetails: {},
+  appointments: [],
+  appointmentDetails: {},
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -40,6 +37,7 @@ const reducer = (state = INIT_STATE, action) => {
         ...state,
         loading: true,
       };
+
     case SERVICES_CREATE:
       return {
         ...state,
@@ -64,6 +62,25 @@ const reducer = (state = INIT_STATE, action) => {
         serviceDetails: {},
       };
 
+    case APPOINTMENTS_CREATE:
+      return {
+        ...state,
+        loading: false,
+        appointmentDetails: action.payload,
+      };
+    case APPOINTMENTS_GET:
+      return {
+        ...state,
+        loading: false,
+        appointments: action.payload,
+      };
+    case APPOINTMENTS_GET_DETAILS:
+      return {
+        ...state,
+        loading: false,
+        appointmentDetails: action.payload,
+      };
+
     default:
       return state;
   }
@@ -72,7 +89,7 @@ const reducer = (state = INIT_STATE, action) => {
 const DataContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
 
-  // featch list of services from API
+  // fetch list of services from API
   async function getServices() {
     dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() => axios(API_PATHS.SERVICES));
@@ -136,8 +153,6 @@ const DataContextProvider = ({ children }) => {
         payload: resp.data,
       });
     }
-
-    console.log(resp);
   }
 
   // delete service
@@ -149,16 +164,88 @@ const DataContextProvider = ({ children }) => {
     console.log(resp);
   }
 
+  // create new Appointment on selected Service
+  async function createAppointment(formData) {
+    const body = { appointment: formData };
+
+    dispatch({ type: LOADING_STARTED });
+    const resp = await supervise_rq(() =>
+      axios.post(API_PATHS.APPOINTMENTS, body)
+    );
+
+    if (resp.status === STATUS.SUCCESS) {
+      dispatch({
+        type: APPOINTMENTS_CREATE,
+        payload: resp.data,
+      });
+      return resp.data;
+    }
+  }
+
+  // fetch list of Appointments from API
+  async function getAppointments() {
+    dispatch({ type: LOADING_STARTED });
+    const resp = await supervise_rq(() => axios(API_PATHS.APPOINTMENTS));
+
+    if (resp.status === STATUS.SUCCESS) {
+      dispatch({
+        type: APPOINTMENTS_GET,
+        payload: resp.data,
+      });
+    }
+  }
+
+  // get Appointment details from API
+  async function getAppointmentDetails(id) {
+    dispatch({ type: LOADING_STARTED });
+    const resp = await supervise_rq(() =>
+      axios(`${API_PATHS.APPOINTMENTS}/${id}`)
+    );
+
+    if (resp.status === STATUS.SUCCESS) {
+      dispatch({
+        type: APPOINTMENTS_GET_DETAILS,
+        payload: resp.data,
+      });
+    }
+  }
+
+  // save Appointment changes
+  async function editAppointment(id, formData) {
+    const body = { service: formData };
+
+    dispatch({ type: LOADING_STARTED });
+    const resp = await supervise_rq(() =>
+      axios.put(`${API_PATHS.APPOINTMENTS}/${id}`, body)
+    );
+
+    if (resp.status === STATUS.SUCCESS) {
+      dispatch({
+        type: APPOINTMENTS_GET_DETAILS,
+        payload: resp.data,
+      });
+    }
+  }
+
   const values = {
     loading: state.loading,
+
     services: state.services,
     serviceDetails: state.serviceDetails,
+    appointments: state.appointments,
+    appointmentDetails: state.appointmentDetails,
+
+    createService,
     getServices,
     getServiceDetails,
     dropServiceDetails,
-    createService,
     editService,
     deleteService,
+
+    createAppointment,
+    getAppointments,
+    getAppointmentDetails,
+    editAppointment,
   };
 
   return <dataContext.Provider value={values}>{children}</dataContext.Provider>;
