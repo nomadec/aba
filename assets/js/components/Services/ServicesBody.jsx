@@ -13,10 +13,10 @@ const ServicesBody = () => {
   }, []);
 
   function handleShow(id) {
-    history.push(URL_PATHS.SERVICE_SHOW(id));
+    history.push(`${URL_PATHS.SERVICE_SHOW}/${id}`);
   }
   function handleEdit(id) {
-    history.push(URL_PATHS.SERVICE_EDIT(id));
+    history.push(`${URL_PATHS.SERVICE_EDIT}/${id}`);
   }
   function handleDelete(id) {
     deleteService(id);

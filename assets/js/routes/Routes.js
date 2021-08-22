@@ -8,6 +8,9 @@ import SignInPage from "../Pages/SignInPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import ServicesPage from "../pages/ServicesPage";
 import ProtectedRoute from "./ProtectedRoute";
+import ServicesCreatePage from "../pages/ServicesCreatePage";
+import ServicesShowPage from "../pages/ServicesShowPage";
+import ServicesEditPage from "../pages/ServicesEditPage";
 
 const Routes = () => {
   return (
@@ -15,16 +18,20 @@ const Routes = () => {
       <Switch>
         <Route exact path={URL_PATHS.HOME} component={HomePage} />
         <Route exact path={URL_PATHS.SERVICES} component={ServicesPage} />
-
-        <ProtectedRoute
-          exact
-          path={`${URL_PATHS.SERVICES}/:action`}
-          component={ServicesPage}
-        />
         <Route
           exact
-          path={`${URL_PATHS.SERVICES}/:action/:id`}
-          component={ServicesPage}
+          path={`${URL_PATHS.SERVICE_SHOW}/:id`}
+          component={ServicesShowPage}
+        />
+        <ProtectedRoute
+          exact
+          path={URL_PATHS.SERVICE_CREATE}
+          component={ServicesCreatePage}
+        />
+        <ProtectedRoute
+          exact
+          path={`${URL_PATHS.SERVICE_EDIT}/:id`}
+          component={ServicesEditPage}
         />
 
         <Route exact path={URL_PATHS.SIGN_UP} component={SignUpPage} />

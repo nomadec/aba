@@ -7,6 +7,8 @@ import DataContextProvider from "../contexts/DataContext";
 const MainLayout = ({ children }) => {
   const { user, getUserData } = useAuth();
 
+  // we fetch user data (if authenticated and if user is empty ) at this layout only,
+  // as only components under MainLayout do require user data
   useEffect(() => {
     if (!user) {
       getUserData();

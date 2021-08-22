@@ -2,38 +2,43 @@ import { Button, Container, Paper, TextField } from "@material-ui/core";
 import React from "react";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useData } from "../../contexts/DataContext";
 import { URL_PATHS } from "../../helpers/consts";
 
-const ServiceForm = ({ action, id }) => {
+const ServiceForm = ({ action }) => {
+  const history = useHistory();
+  const { id } = useParams();
   const {
+    loading,
     createService,
     editService,
     getServiceDetails,
     serviceDetails,
     dropServiceDetails,
   } = useData();
-  const history = useHistory();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  console.log(form);
   const form = {
     editable: false,
     title: "Detailed View",
     button: null,
-
-    name: "",
-    price: "",
-    duration: "",
-    location: "",
-    description: "",
   };
-  console.log(form);
+  if (action === "new") {
+    form.editable = true;
+    form.title = "Create Service";
+    form.button = "Create";
+  }
+  if (action === "edit") {
+    form.editable = true;
+    form.title = "Edit Service";
+    form.button = "Save Changes";
+  }
+  console.log(action, id, form);
 
   useEffect(() => {
     if (action === "show" || action === "edit") {
@@ -45,31 +50,12 @@ const ServiceForm = ({ action, id }) => {
     };
   }, [id]);
 
-  useEffect(() => {
-    form.name = serviceDetails.name;
-    form.price = serviceDetails.price;
-    form.duration = serviceDetails.duration;
-    form.location = serviceDetails.location;
-    form.description = serviceDetails.description;
-  }, [serviceDetails]);
-
-  if (action === "new") {
-    form.editable = true;
-    form.title = "Create Service";
-    form.button = "Create";
-  } else if (action === "edit") {
-    form.editable = true;
-    form.title = "Edit Service";
-    form.button = "Save Changes";
-  }
-
   async function submitForm(formData) {
     if (action === "new") {
       const newService = await createService(formData);
       console.log(newService);
       handleShow(newService.id);
     } else if (action === "edit") {
-      // formData.id = id;
       editService(id, formData);
       dropServiceDetails();
       handleShow(id);
@@ -77,25 +63,27 @@ const ServiceForm = ({ action, id }) => {
   }
 
   function handleEdit(id) {
-    history.push(URL_PATHS.SERVICE_EDIT(id));
+    history.push(`${URL_PATHS.SERVICE_EDIT}/${id}`);
   }
   function handleShow(id) {
-    history.push(URL_PATHS.SERVICE_SHOW(id));
+    history.push(`${URL_PATHS.SERVICE_SHOW}/${id}`);
   }
 
-  const renderViewForm = (
+  const renderViewForm = loading ? (
+    <div>loading...</div>
+  ) : (
     <div>
       <h4>{form.title}</h4>
-      <p>{form.name}</p>
-      <p>{form.price}</p>
-      <p>{form.duration}</p>
-      <p>{form.location}</p>
-      <p>{form.description}</p>
+      <p>{serviceDetails.name}</p>
+      <p>{serviceDetails.price}</p>
+      <p>{serviceDetails.duration}</p>
+      <p>{serviceDetails.location}</p>
+      <p>{serviceDetails.description}</p>
       <button onClick={() => handleEdit(id)}>Edit</button>
     </div>
   );
 
-  const renderEditableForm = serviceDetails.name ? (
+  const renderEditableForm = loading ? (
     <p>loading...</p>
   ) : (
     <Paper>
@@ -106,7 +94,7 @@ const ServiceForm = ({ action, id }) => {
             name="name"
             required={true}
             control={control}
-            defaultValue={form.name}
+            defaultValue={serviceDetails.name}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -121,7 +109,7 @@ const ServiceForm = ({ action, id }) => {
             name="price"
             required={true}
             control={control}
-            defaultValue={form.price}
+            defaultValue={serviceDetails.price}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -136,7 +124,7 @@ const ServiceForm = ({ action, id }) => {
             name="duration"
             required={true}
             control={control}
-            defaultValue={form.duration}
+            defaultValue={serviceDetails.duration}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -151,7 +139,7 @@ const ServiceForm = ({ action, id }) => {
             name="location"
             required={true}
             control={control}
-            defaultValue={form.location}
+            defaultValue={serviceDetails.location}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -166,7 +154,7 @@ const ServiceForm = ({ action, id }) => {
             name="description"
             required={true}
             control={control}
-            defaultValue={form.description}
+            defaultValue={serviceDetails.description}
             render={({ field }) => (
               <TextField
                 {...field}

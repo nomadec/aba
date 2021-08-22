@@ -17,12 +17,20 @@ export const useData = () => {
   return useContext(dataContext);
 };
 
+const dummyServiceDetails = {
+  name: "",
+  price: "",
+  duration: "",
+  location: "",
+  description: "",
+};
+
 const INIT_STATE = {
   loading: false,
   status: null,
   message: null,
   services: [],
-  serviceDetails: {},
+  serviceDetails: dummyServiceDetails,
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -35,16 +43,19 @@ const reducer = (state = INIT_STATE, action) => {
     case SERVICES_CREATE:
       return {
         ...state,
+        loading: false,
         serviceDetails: action.payload,
       };
     case SERVICES_GET:
       return {
         ...state,
+        loading: false,
         services: action.payload,
       };
     case SERVICES_GET_DETAILS:
       return {
         ...state,
+        loading: false,
         serviceDetails: action.payload,
       };
     case SERVICES_DROP_DETAILS:
@@ -63,6 +74,7 @@ const DataContextProvider = ({ children }) => {
 
   // featch list of services from API
   async function getServices() {
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() => axios(API_PATHS.SERVICES));
 
     if (resp.status === STATUS.SUCCESS) {
@@ -75,6 +87,7 @@ const DataContextProvider = ({ children }) => {
 
   // get service details from API
   async function getServiceDetails(id) {
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() => axios(`${API_PATHS.SERVICES}/${id}`));
 
     if (resp.status === STATUS.SUCCESS) {
@@ -95,6 +108,8 @@ const DataContextProvider = ({ children }) => {
   // post new service to API
   async function createService(formData) {
     const body = { service: formData };
+
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() => axios.post(API_PATHS.SERVICES, body));
 
     if (resp.status === STATUS.SUCCESS) {
@@ -109,6 +124,8 @@ const DataContextProvider = ({ children }) => {
   // send service changes to API
   async function editService(id, formData) {
     const body = { service: formData };
+
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() =>
       axios.put(`${API_PATHS.SERVICES}/${id}`, body)
     );
@@ -133,14 +150,15 @@ const DataContextProvider = ({ children }) => {
   }
 
   const values = {
+    loading: state.loading,
+    services: state.services,
+    serviceDetails: state.serviceDetails,
     getServices,
     getServiceDetails,
     dropServiceDetails,
     createService,
     editService,
     deleteService,
-    services: state.services,
-    serviceDetails: state.serviceDetails,
   };
 
   return <dataContext.Provider value={values}>{children}</dataContext.Provider>;
