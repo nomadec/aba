@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { createContext, useContext, useReducer } from "react";
-import { API_PATHS, AUTH_ACTIONS, HEADERS, STATUS } from "../helpers/consts";
+import {
+  API_PATHS,
+  AUTH_ACTIONS,
+  HEADERS,
+  LOADING_ENDED,
+  LOADING_STARTED,
+  STATUS,
+} from "../helpers/consts";
 import { supervise_rq } from "../helpers/utils";
 import qs from "qs";
 
@@ -11,17 +18,17 @@ export const useAuth = () => {
 };
 
 const INIT_STATE = {
-  user: null,
   loading: false,
   status: null,
   message: null,
+  user: null,
   email_confirmed: false,
 };
 
 const reducer = (state = INIT_STATE, action) => {
   console.log(action);
   switch (action.type) {
-    case AUTH_ACTIONS.AUTH_LOADING:
+    case LOADING_STARTED:
       return {
         ...state,
         loading: true,
@@ -77,7 +84,7 @@ const reducer = (state = INIT_STATE, action) => {
         message: action.payload,
         user: null,
       };
-    case AUTH_ACTIONS.AUTH_CLEAR_STATE:
+    case LOADING_ENDED:
       return {
         ...state,
         loading: false,
@@ -121,7 +128,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
     const body = qs.stringify({ user: userForm });
 
     cleanupAuthState();
-    dispatch({ type: AUTH_ACTIONS.AUTH_LOADING });
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() =>
       axios.post(API_PATHS.AUTH_SIGN_UP, body, { headers })
     );
@@ -143,7 +150,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
   // verify user's email and update state accordingly
   async function confirmEmail(confirmation_token) {
     cleanupAuthState();
-    dispatch({ type: AUTH_ACTIONS.AUTH_LOADING });
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() =>
       axios(`${API_PATHS.AUTH_CONFIRM_EMAIL}/${confirmation_token}`)
     );
@@ -169,7 +176,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
     const body = { user: userForm };
 
     cleanupAuthState();
-    dispatch({ type: AUTH_ACTIONS.AUTH_LOADING });
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() =>
       axios.post(API_PATHS.AUTH_SIGN_IN, body, { headers })
     );
@@ -195,7 +202,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
     attach_headers([HEADERS.CSRF], headers);
 
     cleanupAuthState();
-    dispatch({ type: AUTH_ACTIONS.AUTH_LOADING });
+    dispatch({ type: LOADING_STARTED });
     await supervise_rq(() =>
       axios.delete(API_PATHS.AUTH_SIGN_OUT, { headers })
     );
@@ -212,7 +219,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
     const body = { user: formData };
 
     cleanupAuthState();
-    dispatch({ type: AUTH_ACTIONS.AUTH_LOADING });
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() =>
       axios.post(API_PATHS.AUTH_UPDATE_PASSWORD, body, { headers })
     );
@@ -237,7 +244,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
   //   attach_headers([HEADERS.CSRF], headers);
 
   //   cleanupAuthState();
-  //   dispatch({ type: AUTH_ACTIONS.AUTH_LOADING });
+  //   dispatch({ type: LOADING_STARTED });
   //   const resp = await supervise_rq(() =>
   //     axios(`${API_PATHS.AUTH_UPDATE_PASSWORD}/${reset_token}`, { headers })
   //   );
@@ -265,7 +272,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
     const body = { user: formData };
 
     cleanupAuthState();
-    dispatch({ type: AUTH_ACTIONS.AUTH_LOADING });
+    dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() =>
       axios.put(`${API_PATHS.AUTH_UPDATE_PASSWORD}/${reset_token}`, body, {
         headers,
@@ -301,7 +308,7 @@ const AuthContextProvider = ({ csrfToken, children }) => {
   // this needed to clean state before performing some actions
   // or when some components do unmount
   function cleanupAuthState() {
-    dispatch({ type: AUTH_ACTIONS.AUTH_CLEAR_STATE });
+    dispatch({ type: LOADING_ENDED });
   }
 
   // group all values that we wish to share/provide in context

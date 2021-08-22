@@ -16,7 +16,7 @@ export async function supervise_rq(req) {
 function compileMessages(messages) {
   let string = "";
   for (let key in messages) {
-    string = string + `${key} - ${messages[key]}`;
+    string = `${string}, ${key} - ${messages[key]}`;
   }
   return string;
 }
