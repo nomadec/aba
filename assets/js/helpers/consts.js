@@ -70,6 +70,8 @@ export const STATUS = {
   ERROR: "error",
 };
 
+export const PER_PAGE = 5;
+
 export const HEADERS = {
   CONTENT_TYPE: "content-type",
   CSRF: "x-csrf-token",

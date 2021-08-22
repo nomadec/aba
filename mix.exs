@@ -54,7 +54,8 @@ defmodule Aba.MixProject do
       {:mail, ">= 0.0.0"},
       {:hackney, "~> 1.9"},
       {:cowlib, "~> 2.9.1", [env: :prod, hex: "cowlib", repo: "hexpm", override: true]},
-      {:gun, git: "https://github.com/ninenines/gun.git", tag: "2.0.0-pre.2"}
+      {:gun, git: "https://github.com/ninenines/gun.git", tag: "2.0.0-pre.2"},
+      {:rummage_ecto, "~> 2.0.0"}
 
     ]
   end
