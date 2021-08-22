@@ -51,7 +51,7 @@ const ServicesBody = () => {
                 <td>{item.location}</td>
                 <td>{item.duration}</td>
                 <td>{item.description}</td>
-                <td>{item.provider_id}</td>
+                <td>{item.user_id}</td>
                 <td>
                   <button onClick={() => handleShow(item.id)}>Show</button>
                 </td>

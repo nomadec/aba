@@ -2,13 +2,15 @@ defmodule Aba.Services.Service do
   use Aba.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :name, :price, :duration, :location, :description]}
   schema "services" do
-    field :description, :string
-    field :duration, :integer
-    field :location, :string
     field :name, :string
     field :price, :float
-    field :provider_id, Ecto.UUID
+    field :duration, :integer
+    field :location, :string
+    field :description, :string
+    belongs_to :user, Aba.Users.User
+    has_many :appointments, Aba.Appointments.Appointment
 
     timestamps()
   end
@@ -16,7 +18,7 @@ defmodule Aba.Services.Service do
   @doc false
   def changeset(service, attrs) do
     service
-    |> cast(attrs, [:name, :provider_id, :price, :duration, :location, :description])
-    |> validate_required([:name, :provider_id, :price, :duration, :location, :description])
+    |> cast(attrs, [:name, :price, :duration, :location, :description, :user_id])
+    |> validate_required([:name, :price, :duration, :location, :description, :user_id])
   end
 end

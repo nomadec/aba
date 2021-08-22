@@ -19,6 +19,8 @@ defmodule AbaWeb.UserView do
       role: user.role,
       email_confirmation_token: user.email_confirmation_token,
       email_confirmed_at: user.email_confirmed_at,
-      unconfirmed_email: user.unconfirmed_email}
+      unconfirmed_email: user.unconfirmed_email,
+      services: user.services
+    }
   end
 end

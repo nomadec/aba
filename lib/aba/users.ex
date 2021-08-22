@@ -7,6 +7,7 @@ defmodule Aba.Users do
   user: Aba.Users.User
 
   alias Aba.{Repo, Users.User}
+  import Ecto.Query
 
   # def authenticate(params), do: pow_authenticate(params)
   # def create(params), do: pow_create(params)
@@ -33,7 +34,7 @@ defmodule Aba.Users do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all from u in User, preload: [:services]
   end
 
   @doc """
@@ -50,7 +51,7 @@ defmodule Aba.Users do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: Repo.get!(User, id) |> Repo.preload(:services)
 
   @doc """
   Creates a user.

@@ -17,20 +17,12 @@ export const useData = () => {
   return useContext(dataContext);
 };
 
-const dummyServiceDetails = {
-  name: "",
-  price: "",
-  duration: "",
-  location: "",
-  description: "",
-};
-
 const INIT_STATE = {
   loading: false,
   status: null,
   message: null,
   services: [],
-  serviceDetails: dummyServiceDetails,
+  serviceDetails: {},
 };
 
 const reducer = (state = INIT_STATE, action) => {
