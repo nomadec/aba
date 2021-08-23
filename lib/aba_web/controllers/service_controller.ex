@@ -17,8 +17,8 @@ defmodule AbaWeb.ServiceController do
     sort_by = {Map.get(params, "_sort", @default_sort_by), Map.get(params, "_order", @default_sort_order)}
     page = Map.get(params, "_page", "1")
     per_page = Map.get(params, "_limit", @default_per_page)
-    services = Services.list_services(search_term, sort_by, String.to_integer(per_page), String.to_integer(page))
-    render(conn, "index.json", services: services)
+    data = Services.list_services(search_term, sort_by, String.to_integer(per_page), String.to_integer(page))
+    render(conn, "index.json", data)
   end
 
   def create(conn, %{"service" => service_params}) do

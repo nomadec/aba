@@ -3,8 +3,10 @@ import React from "react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useData } from "../../contexts/DataContext";
-import { URL_PATHS } from "../../helpers/consts";
+import { PER_PAGE, URL_PATHS } from "../../helpers/consts";
 import SearchIcon from "@material-ui/icons/Search";
+import { Pagination } from "@material-ui/lab";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -71,7 +73,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ServicesBody = () => {
-  const { getServices, deleteService, services } = useData();
+  const { getServices, deleteService, services, servicesTotalPages } =
+    useData();
+  const [currentPage, setCurrentPage] = useState(getCurrentPage());
   const history = useHistory();
 
   const classes = useStyles();
@@ -95,6 +99,24 @@ const ServicesBody = () => {
   function handleDelete(id) {
     deleteService(id);
     getServices();
+  }
+
+  function handlePage(e, page) {
+    const search = new URLSearchParams(window.location.search);
+    search.set("_page", page);
+    history.push(`${history.location.pathname}?${search.toString()}`);
+    getServices();
+    setCurrentPage(page);
+  }
+
+  function getCurrentPage() {
+    const search = new URLSearchParams(window.location.search);
+
+    if (!search.get("_page")) {
+      return 1;
+    }
+
+    return search.get("_page");
   }
 
   return (
@@ -155,6 +177,17 @@ const ServicesBody = () => {
           </tbody>
         </table>
       )}
+      <div style={{ margin: "20px auto" }}>
+        <Pagination
+          count={servicesTotalPages}
+          color="primary"
+          page={+currentPage}
+          onChange={handlePage}
+          shape="rounded"
+          showFirstButton
+          showLastButton
+        />
+      </div>
     </div>
   );
 };

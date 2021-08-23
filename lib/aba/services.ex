@@ -28,7 +28,7 @@ defmodule Aba.Services do
     |> build_paginate(per_page, page)
 
     {queryable, rummage} = Rummage.Ecto.rummage(Service, rummage, repo: Aba.Repo)
-    Repo.all(queryable)
+    Map.put(rummage, :services, Repo.all(queryable))
   end
 
   defp build_search(rummage, nil), do: rummage
