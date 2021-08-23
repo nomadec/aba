@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { useData } from "../../contexts/DataContext";
 import { URL_PATHS } from "../../helpers/consts";
+import ServiceDetails from "./ServiceDetails";
 
 const ServiceForm = ({ action }) => {
   const history = useHistory();
@@ -74,15 +75,18 @@ const ServiceForm = ({ action }) => {
   const renderViewForm = loading ? (
     <div>loading...</div>
   ) : (
-    <div>
-      <h4>{form.title}</h4>
-      <p>{serviceDetails.name}</p>
-      <p>{serviceDetails.price}</p>
-      <p>{serviceDetails.duration}</p>
-      <p>{serviceDetails.location}</p>
-      <p>{serviceDetails.description}</p>
-      <button onClick={() => handleEdit(id)}>Edit</button>
-    </div>
+    <>
+      <div>
+        <h4>{form.title}</h4>
+        <p>{serviceDetails.name}</p>
+        <p>{serviceDetails.price}</p>
+        <p>{serviceDetails.duration}</p>
+        <p>{serviceDetails.location}</p>
+        <p>{serviceDetails.description}</p>
+        <button onClick={() => handleEdit(id)}>Edit</button>
+      </div>
+      <ServiceDetails />
+    </>
   );
 
   const renderEditableForm = loading ? (

@@ -40,6 +40,7 @@ export const API_PATHS = {
   // api_v1_service_path  GET     /api/v1/services/new                   AbaWeb.ServiceController :new
   SERVICES: `${API}/services`,
   APPOINTMENTS: `${API}/appointments`,
+  COMMENTS: `${API}/comments`,
 };
 
 export const AUTH_ACTIONS = {
@@ -65,10 +66,16 @@ export const APPOINTMENTS_CREATE = "APPOINTMENTS_CREATE";
 export const APPOINTMENTS_GET = "APPOINTMENTS_GET";
 export const APPOINTMENTS_GET_DETAILS = "APPOINTMENTS_GET_DETAILS";
 
+export const COMMENTS_GET = "COMMENTS_GET";
+
 export const STATUS = {
   SUCCESS: "success",
   ERROR: "error",
 };
+
+export const ROLE_ADMIN = "admin";
+export const ROLE_CONSUMER = "consumer";
+export const ROLE_PROVIDER = "provider";
 
 export const PER_PAGE = 5;
 

@@ -12,8 +12,7 @@ defmodule AbaWeb.AppointmentController do
   end
 
   def create(conn, %{"appointment" => appointment_params}) do
-    current_user = Pow.Plug.current_user(conn)
-    appointment_params = Map.put(appointment_params, "user_id", current_user.id)
+    appointment_params = Aba.attach_owner(conn, appointment_params)
     with {:ok, %Appointment{} = appointment} <- Appointments.create_appointment(appointment_params) do
       conn
       |> put_status(:created)
@@ -28,9 +27,8 @@ defmodule AbaWeb.AppointmentController do
   end
 
   def update(conn, %{"id" => id, "appointment" => appointment_params}) do
-    current_user = Pow.Plug.current_user(conn)
     appointment = Appointments.get_appointment!(id)
-    case appointment.user_id === current_user.id do
+    case Aba.verify_ownership(conn, appointment) do
       true ->
         with {:ok, %Appointment{} = appointment} <- Appointments.update_appointment(appointment, appointment_params) do
           render(conn, "show.json", appointment: appointment)
@@ -44,9 +42,8 @@ defmodule AbaWeb.AppointmentController do
   end
 
   def delete(conn, %{"id" => id}) do
-    current_user = Pow.Plug.current_user(conn)
     appointment = Appointments.get_appointment!(id)
-    case appointment.user_id === current_user.id do
+    case Aba.verify_ownership(conn, appointment) do
       true ->
         with {:ok, %Appointment{}} <- Appointments.delete_appointment(appointment) do
           send_resp(conn, :no_content, "")

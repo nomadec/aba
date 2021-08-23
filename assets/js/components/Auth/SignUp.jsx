@@ -11,7 +11,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { URL_PATHS } from "./../../helpers/consts";
+import {
+  ROLE_CONSUMER,
+  ROLE_PROVIDER,
+  URL_PATHS,
+} from "./../../helpers/consts";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   FormControl,
@@ -125,8 +129,8 @@ const SignUp = () => {
                       id="role"
                       label="Role"
                     >
-                      <MenuItem value="consumer">Consumer</MenuItem>
-                      <MenuItem value="provider">Provider</MenuItem>
+                      <MenuItem value={ROLE_CONSUMER}>Consumer</MenuItem>
+                      <MenuItem value={ROLE_PROVIDER}>Provider</MenuItem>
                     </Select>
                   </FormControl>
                 )}

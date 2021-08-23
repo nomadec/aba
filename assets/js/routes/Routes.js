@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { URL_PATHS } from "./../helpers/consts";
+import { ROLE_PROVIDER, URL_PATHS } from "./../helpers/consts";
 import HomePage from "../Pages/HomePage";
 import SignUpPage from "../Pages/SignUpPage";
 import ConfirmEmailPage from "../pages/ConfirmEmailPage";
@@ -28,11 +28,13 @@ const Routes = () => {
           exact
           path={URL_PATHS.SERVICE_CREATE}
           component={ServicesCreatePage}
+          role={ROLE_PROVIDER}
         />
         <ProtectedRoute
           exact
           path={`${URL_PATHS.SERVICE_EDIT}/:id`}
           component={ServicesEditPage}
+          role={ROLE_PROVIDER}
         />
 
         <ProtectedRoute

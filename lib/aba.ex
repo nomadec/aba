@@ -11,4 +11,16 @@ defmodule Aba do
   # mix phx.gen.json Services Service services name:string user_id:uuid price:float duration:integer location:string description:string
 
   # mix phx.gen.json Appointments Appointment appointments user_id:references:users service_id:references:services date_time:utc_datetime paid:boolean
+  # mix phx.gen.json Comments Comment comments user_id:references:users service_id:references:services content:text
+
+  def attach_owner(conn, params) do
+    current_user = Pow.Plug.current_user(conn)
+    Map.put(params, "user_id", current_user.id)
+  end
+
+  def verify_ownership(conn, record) do
+    current_user = Pow.Plug.current_user(conn)
+    record.user_id === current_user.id
+  end
+
 end

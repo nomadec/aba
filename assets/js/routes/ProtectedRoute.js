@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
+import { permittedRole } from "../helpers/utils";
 import { useAuth } from "./../contexts/AuthContext";
 import { URL_PATHS } from "./../helpers/consts";
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
+const ProtectedRoute = ({ component: Component, role, ...rest }) => {
   const { user, getUserData } = useAuth();
 
   // fetching user data is normally done at MainLayout level,
@@ -15,16 +16,22 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     }
   }, []);
 
+  const redirect = ({ path, location }) => (
+    <Redirect to={{ pathname: path, state: { from: location } }} />
+  );
+
   return (
     <Route
       {...rest}
       render={({ location }) =>
         user ? (
-          <Component />
+          permittedRole(user, role) ? (
+            <Component />
+          ) : (
+            redirect({ path: URL_PATHS.HOME, location })
+          )
         ) : (
-          <Redirect
-            to={{ pathname: URL_PATHS.SIGN_IN, state: { from: location } }}
-          />
+          redirect({ path: URL_PATHS.SIGN_IN, location })
         )
       }
     />

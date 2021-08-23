@@ -38,12 +38,14 @@ defmodule AbaWeb.Router do
     pipe_through [:api]
 
     resources "/services", ServiceController, only: [:index, :show]
+    resources "/comments", CommentController, only: [:index, :show]
   end
 
   scope "/api/v1", AbaWeb, as: :api_v1 do
     pipe_through [:api, :api_protected]
 
     resources "/appointments", AppointmentController, only: [:index, :show]
+    resources "/comments", CommentController
 
     resources "/users", UserController
   end
