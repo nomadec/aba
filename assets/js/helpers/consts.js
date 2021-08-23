@@ -70,6 +70,10 @@ export const STATUS = {
   ERROR: "error",
 };
 
+export const ROLE_ADMIN = "admin";
+export const ROLE_CONSUMER = "consumer";
+export const ROLE_PROVIDER = "provider";
+
 export const PER_PAGE = 5;
 
 export const HEADERS = {
