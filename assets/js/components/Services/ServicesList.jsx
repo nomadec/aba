@@ -1,4 +1,4 @@
-import { fade, InputBase, makeStyles } from "@material-ui/core";
+import { alpha, InputBase, makeStyles } from "@material-ui/core";
 import React from "react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -7,6 +7,7 @@ import { PER_PAGE, URL_PATHS } from "../../helpers/consts";
 import SearchIcon from "@material-ui/icons/Search";
 import { Pagination } from "@material-ui/lab";
 import { useState } from "react";
+import ServiceCard from "./ServiceCard";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -24,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -72,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ServicesBody = () => {
+const ServicesList = () => {
   const { getServices, deleteService, services, servicesTotalPages } =
     useData();
   const [currentPage, setCurrentPage] = useState(getCurrentPage());
@@ -157,22 +158,33 @@ const ServicesBody = () => {
           <tbody>
             {services.map((item) => (
               <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.price}</td>
-                <td>{item.location}</td>
-                <td>{item.duration}</td>
-                <td>{item.description}</td>
-                <td>{item.user_id}</td>
-                <td>
-                  <button onClick={() => handleShow(item.id)}>Show</button>
-                </td>
-                <td>
-                  <button onClick={() => handleEdit(item.id)}>Edit</button>
-                </td>
-                <td>
-                  <button onClick={() => handleDelete(item.id)}>Delete</button>
+                <td style={{ columnSpan: 6 }}>
+                  <ServiceCard
+                    key={item.id}
+                    service={item}
+                    handleShow={handleShow}
+                    handleEdit={handleEdit}
+                    handleDelete={handleDelete}
+                  />
                 </td>
               </tr>
+              // <tr key={item.id}>
+              //   <td>{item.name}</td>
+              //   <td>{item.price}</td>
+              //   <td>{item.location}</td>
+              //   <td>{item.duration}</td>
+              //   <td>{item.description}</td>
+              //   <td>{item.user_id}</td>
+              //   <td>
+              //     <button onClick={() => handleShow(item.id)}>Show</button>
+              //   </td>
+              //   <td>
+              //     <button onClick={() => handleEdit(item.id)}>Edit</button>
+              //   </td>
+              //   <td>
+              //     <button onClick={() => handleDelete(item.id)}>Delete</button>
+              //   </td>
+              // </tr>
             ))}
           </tbody>
         </table>
@@ -192,4 +204,4 @@ const ServicesBody = () => {
   );
 };
 
-export default ServicesBody;
+export default ServicesList;

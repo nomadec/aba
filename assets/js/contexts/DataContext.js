@@ -6,6 +6,7 @@ import {
   APPOINTMENTS_CREATE,
   APPOINTMENTS_GET,
   APPOINTMENTS_GET_DETAILS,
+  COMMENTS_GET,
   LOADING_STARTED,
   PER_PAGE,
   SERVICES_CREATE,
@@ -15,6 +16,7 @@ import {
   STATUS,
 } from "../helpers/consts";
 import { supervise_rq } from "../helpers/utils";
+import { useAuth } from "./AuthContext";
 
 const dataContext = createContext();
 
@@ -32,6 +34,7 @@ const INIT_STATE = {
   servicesTotalCount: 0,
   appointments: [],
   appointmentDetails: {},
+  comments: [],
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -87,6 +90,13 @@ const reducer = (state = INIT_STATE, action) => {
         appointmentDetails: action.payload,
       };
 
+    case COMMENTS_GET:
+      return {
+        ...state,
+        loading: false,
+        comments: action.payload,
+      };
+
     default:
       return state;
   }
@@ -95,6 +105,11 @@ const reducer = (state = INIT_STATE, action) => {
 const DataContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
   const history = useHistory();
+  const { user } = useAuth();
+
+  // function to check if data (comment, service, appointment and etc) createad by user in session
+  // with this check we can display or hide Edit/Delete buttons for owned or not items
+  const verifyOwnership = (object) => user && object.user_id === user.id;
 
   // fetch list of services from API
   async function getServices() {
@@ -168,7 +183,7 @@ const DataContextProvider = ({ children }) => {
     }
   }
 
-  // delete service
+  // delete Service
   async function deleteService(id) {
     const resp = await supervise_rq(() =>
       axios.delete(`${API_PATHS.SERVICES}/${id}`)
@@ -240,6 +255,58 @@ const DataContextProvider = ({ children }) => {
     }
   }
 
+  // fetch list of Comments from API
+  async function getComments(serviceId) {
+    dispatch({ type: LOADING_STARTED });
+    const resp = await supervise_rq(() =>
+      axios(`${API_PATHS.COMMENTS}?_service_id=${serviceId}`)
+    );
+
+    if (resp.status === STATUS.SUCCESS) {
+      dispatch({
+        type: COMMENTS_GET,
+        payload: resp.data,
+      });
+    }
+  }
+
+  // add new Comment for Service in view
+  async function createComment(formData) {
+    const body = { comment: formData };
+
+    dispatch({ type: LOADING_STARTED });
+    const resp = await supervise_rq(() => axios.post(API_PATHS.COMMENTS, body));
+
+    if (resp.status === STATUS.SUCCESS) {
+      await getComments(state.serviceDetails.id);
+    }
+  }
+
+  // save changes on a Comment
+  async function editComment(formData) {
+    const body = { comment: formData };
+
+    dispatch({ type: LOADING_STARTED });
+    const resp = await supervise_rq(() =>
+      axios.put(`${API_PATHS.COMMENTS}/${formData.id}`, body)
+    );
+
+    if (resp.status === STATUS.SUCCESS) {
+      await getComments(state.serviceDetails.id);
+    }
+  }
+
+  // delete Comment
+  async function deleteComment(id) {
+    const resp = await supervise_rq(() =>
+      axios.delete(`${API_PATHS.COMMENTS}/${id}`)
+    );
+    if (resp.status === STATUS.SUCCESS) {
+      await getComments(state.serviceDetails.id);
+    }
+    console.log(resp);
+  }
+
   const values = {
     loading: state.loading,
 
@@ -248,6 +315,9 @@ const DataContextProvider = ({ children }) => {
     servicesTotalPages: state.servicesTotalPages,
     appointments: state.appointments,
     appointmentDetails: state.appointmentDetails,
+    comments: state.comments,
+
+    verifyOwnership,
 
     createService,
     getServices,
@@ -260,6 +330,11 @@ const DataContextProvider = ({ children }) => {
     getAppointments,
     getAppointmentDetails,
     editAppointment,
+
+    createComment,
+    getComments,
+    editComment,
+    deleteComment,
   };
 
   return <dataContext.Provider value={values}>{children}</dataContext.Provider>;

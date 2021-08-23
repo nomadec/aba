@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { STATUS, URL_PATHS } from "../../helpers/consts";
 import { supervise_rq } from "../../helpers/utils";
+import Searchbar from "./Searchbar";
 
 const Header = () => {
   const { user, signOut } = useAuth();
@@ -66,6 +67,7 @@ const Header = () => {
           : "Not Found"}
         <hr />
       </div>
+      <Searchbar />
     </div>
   );
 };
