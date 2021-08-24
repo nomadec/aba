@@ -16,6 +16,10 @@ export const URL_PATHS = {
   APPOINTMENT_SHOW: "/appointments/show",
   APPOINTMENT_EDIT: "/appointments/edit",
 
+  FAVORITES: "/favorites",
+
+  CHAT: "/chat",
+
   SIGN_UP: "/signup",
   CONFIRM_EMAIL: "/confirm-email/:confirmation_token",
   SIGN_IN: "/session/new",
@@ -78,8 +82,16 @@ export const ROLE_CONSUMER = "consumer";
 export const ROLE_PROVIDER = "provider";
 
 export const SERVICE_CATEGORIES = [
-  { value: "healthcare", label: "Healthcare" },
-  { value: "beauty", label: "Beauty" },
+  { value: "healthcare", label: "Healthcare", icon: "LocalHospital" },
+  { value: "fitness", label: "Fitness", icon: "FitnessCenter" },
+  { value: "beauty", label: "Beauty", icon: "Spa", icon: "Brush" },
+  { value: "swimming_pool", label: "Swimming Pool", icon: "Pool" },
+  { value: "restaurant", label: "Restaurant", icon: "Restaurant" },
+  { value: "activities", label: "Activities", icon: "SportsTennis" },
+  { value: "entertainment", label: "Entertainment" },
+  { value: "education", label: "Education" },
+  { value: "repair", label: "Repair" },
+
   { value: "all", label: "Show all" },
 ];
 

@@ -42,6 +42,16 @@ const Routes = () => {
           path={URL_PATHS.APPOINTMENTS}
           component={AppointmentsPage}
         />
+        <ProtectedRoute
+          exact
+          path={URL_PATHS.CHAT}
+          component={AppointmentsPage}
+        />
+        <ProtectedRoute
+          exact
+          path={URL_PATHS.FAVORITES}
+          component={AppointmentsPage}
+        />
 
         <Route exact path={URL_PATHS.SIGN_UP} component={SignUpPage} />
         <Route
