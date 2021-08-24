@@ -77,6 +77,12 @@ export const ROLE_ADMIN = "admin";
 export const ROLE_CONSUMER = "consumer";
 export const ROLE_PROVIDER = "provider";
 
+export const SERVICE_CATEGORIES = [
+  { value: "healthcare", label: "Healthcare" },
+  { value: "beauty", label: "Beauty" },
+  { value: "all", label: "Show all" },
+];
+
 export const PER_PAGE = 5;
 
 export const HEADERS = {

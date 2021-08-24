@@ -22,7 +22,6 @@ const CommentForm = ({ handleSubmit, bodyLabel, comment, buttonLabel }) => {
 
   async function handleClick(e) {
     e.preventDefault();
-    console.log(newComment);
     await handleSubmit(newComment);
     setNewComment({ ...comment, content: "" });
   }

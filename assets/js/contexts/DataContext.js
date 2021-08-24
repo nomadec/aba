@@ -32,6 +32,7 @@ const INIT_STATE = {
   serviceDetails: {},
   servicesTotalPages: 1,
   servicesTotalCount: 0,
+  servicesFilters: {},
   appointments: [],
   appointmentDetails: {},
   comments: [],
@@ -56,8 +57,9 @@ const reducer = (state = INIT_STATE, action) => {
         ...state,
         loading: false,
         services: action.payload.services,
-        servicesTotalPages: action.payload.paginate.max_page,
+        servicesTotalPages: action.payload.paginate.total_pages,
         servicesTotalCount: action.payload.paginate.total_count,
+        servicesFilters: action.payload.filters,
       };
     case SERVICES_GET_DETAILS:
       return {
@@ -313,6 +315,7 @@ const DataContextProvider = ({ children }) => {
     services: state.services,
     serviceDetails: state.serviceDetails,
     servicesTotalPages: state.servicesTotalPages,
+    servicesFilters: state.servicesFilters,
     appointments: state.appointments,
     appointmentDetails: state.appointmentDetails,
     comments: state.comments,

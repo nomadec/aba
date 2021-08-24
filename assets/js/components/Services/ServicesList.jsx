@@ -8,6 +8,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Pagination } from "@material-ui/lab";
 import { useState } from "react";
 import ServiceCard from "./ServiceCard";
+import ServicesFilterbar from "./ServicesFilterbar";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -136,6 +137,8 @@ const ServicesList = () => {
           onChange={(e) => handleValue(e)}
         />
       </div>
+
+      <ServicesFilterbar />
 
       <h1>Catalogue</h1>
       {services.length === 0 ? (
