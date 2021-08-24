@@ -11,7 +11,6 @@ defmodule AbaWeb.CommentView do
   end
 
   def render("comment.json", %{comment: comment}) do
-    IO.inspect(comment)
     %{
       id: comment.id,
       user_id: comment.user_id,

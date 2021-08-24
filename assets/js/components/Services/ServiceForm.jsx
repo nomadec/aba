@@ -41,7 +41,6 @@ const ServiceForm = ({ action }) => {
     form.title = "Edit Service";
     form.button = "Save Changes";
   }
-  console.log(action, id, form);
 
   useEffect(() => {
     if (action === "show" || action === "edit") {
@@ -56,7 +55,6 @@ const ServiceForm = ({ action }) => {
   async function submitForm(formData) {
     if (action === "new") {
       const newService = await createService(formData);
-      console.log(newService);
       handleShow(newService.id);
     } else if (action === "edit") {
       editService(id, formData);

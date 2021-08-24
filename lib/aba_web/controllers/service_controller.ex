@@ -11,13 +11,16 @@ defmodule AbaWeb.ServiceController do
   @default_sort_order :asc
 
   def index(conn, params) do
-    IO.inspect(params)
     # %{"_q" => search_term, "_page" => page, "_limit" => per_page, "_sort" => sort_by "_order" => sort_order}
     search_term = Map.get(params, "_q", nil)
     sort_by = {Map.get(params, "_sort", @default_sort_by), Map.get(params, "_order", @default_sort_order)}
     page = Map.get(params, "_page", "1")
     per_page = Map.get(params, "_limit", @default_per_page)
-    data = Services.list_services(search_term, sort_by, String.to_integer(per_page), String.to_integer(page))
+    # data = Services.list_services(search_term, sort_by, String.to_integer(per_page), String.to_integer(page))
+    # data = Services.list_services(:paged, String.to_integer(page), String.to_integer(per_page), params)
+    data = Services.list_services(:paged, params)
+    filters = Services.get_min_max_price_on_services()
+    data = Map.put(data, :filters, filters)
     render(conn, "index.json", data)
   end
 

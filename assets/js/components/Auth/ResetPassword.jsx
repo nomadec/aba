@@ -44,7 +44,6 @@ const ResetPassword = () => {
   const { reset_token } = useParams();
   const { requestResetPassword, updatePassword } = useAuth();
   const show_request_form = reset_token === "new";
-  console.log(show_request_form);
 
   // currently not possible to check
   // function verifyToken() {

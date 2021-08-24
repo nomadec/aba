@@ -5,6 +5,10 @@ defmodule AbaWeb.ServiceView do
   def render("index.json", %{services: services, paginate: paginate, sort: sort} = data) do
     %{data: Map.put(%{paginate: paginate, sort: sort}, :services, render_many(services, ServiceView, "service.json"))}
   end
+  def render("index.json", %{list: services, total_pages: total_pages, total_count: total_count, filters: filters} = data) do
+    # %{data: []}
+    %{data: Map.put(%{paginate: %{total_pages: total_pages, total_count: total_count}, filters: filters}, :services, render_many(services, ServiceView, "service.json"))}
+  end
 
   def render("show.json", %{service: service}) do
     %{data: render_one(service, ServiceView, "service.json")}
