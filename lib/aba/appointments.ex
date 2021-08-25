@@ -18,7 +18,7 @@ defmodule Aba.Appointments do
 
   """
   def list_appointments do
-    Repo.all(Appointment)
+    Repo.all(Appointment) |> Repo.preload([:user, :service])
   end
 
   @doc """
@@ -50,9 +50,15 @@ defmodule Aba.Appointments do
 
   """
   def create_appointment(attrs \\ %{}) do
-    %Appointment{}
-    |> Appointment.changeset(attrs)
-    |> Repo.insert()
+    appointment =
+      %Appointment{}
+      |> Appointment.changeset(attrs)
+    case Repo.insert(appointment) do
+      {:ok, appointment} ->
+        {:ok, Repo.preload(appointment, [:user, :service])}
+      else_result ->
+        else_result
+    end
   end
 
   @doc """

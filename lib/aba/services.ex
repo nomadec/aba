@@ -37,6 +37,11 @@ defmodule Aba.Services do
     |> or_where([s], ilike(s.description, ^("%" <> value <> "%")))
     list_services(:paged, Map.delete(params, "_q"), query, pagination)
   end
+  def list_services(:paged, %{"_category" => value} = params, query, pagination) when map_size(params) >= 1 do
+    query = query
+    |> where(category: ^value)
+    list_services(:paged, Map.delete(params, "_category"), query, pagination)
+  end
   def list_services(:paged, %{"_price_gte" => value} = params, query, pagination) when map_size(params) >= 1 do
     query = query
     |> where([s], s.price >= ^(String.to_integer(value)))
@@ -59,7 +64,7 @@ defmodule Aba.Services do
   def list_services(:paged, params, query, pagination) when map_size(params) == 0 do
     query
     |> order_by(asc: :name)
-    |> AbaWeb.Pagination.page(Map.get(pagination, "_page", 1), per_page: Map.get(pagination, "_limit", 2))
+    |> AbaWeb.Pagination.page([:user], Map.get(pagination, "_page", 1), per_page: Map.get(pagination, "_limit", 2))
   end
 
   # def list_services(), do: list_services(nil)
@@ -113,7 +118,8 @@ defmodule Aba.Services do
       ** (Ecto.NoResultsError)
 
   """
-  def get_service!(id), do: Repo.get!(Service, id)
+  def get_service!(id), do: Repo.get!(Service, id) |> Repo.preload(:user)
+
 
   @doc """
   Creates a service.
@@ -128,9 +134,15 @@ defmodule Aba.Services do
 
   """
   def create_service(attrs \\ %{}) do
-    %Service{}
-    |> Service.changeset(attrs)
-    |> Repo.insert()
+    service =
+      %Service{}
+      |> Service.changeset(attrs)
+    case Repo.insert(service) do
+      {:ok, service} ->
+        {:ok, Repo.preload(service, :user)}
+      else_result ->
+        else_result
+    end
   end
 
   @doc """

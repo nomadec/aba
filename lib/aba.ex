@@ -13,6 +13,8 @@ defmodule Aba do
   # mix phx.gen.json Appointments Appointment appointments user_id:references:users service_id:references:services date_time:utc_datetime paid:boolean
   # mix phx.gen.json Comments Comment comments user_id:references:users service_id:references:services content:text
 
+  # mix phx.gen.json Categories Category categories name:references:users service_id:references:services content:text
+
   def attach_owner(conn, params) do
     current_user = Pow.Plug.current_user(conn)
     Map.put(params, "user_id", current_user.id)

@@ -1,12 +1,12 @@
 import React from "react";
 import ConfirmEmail from "../components/Auth/ConfirmEmail";
-import AuthLayout from "../Layouts/AuthLayout";
+import BaseLayout from "../Layouts/BaseLayout";
 
 const ConfirmEmailPage = () => {
   return (
-    <AuthLayout>
+    <BaseLayout>
       <ConfirmEmail />
-    </AuthLayout>
+    </BaseLayout>
   );
 };
 

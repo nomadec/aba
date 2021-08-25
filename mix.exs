@@ -56,7 +56,6 @@ defmodule Aba.MixProject do
       {:cowlib, "~> 2.9.1", [env: :prod, hex: "cowlib", repo: "hexpm", override: true]},
       {:gun, git: "https://github.com/ninenines/gun.git", tag: "2.0.0-pre.2"},
       {:rummage_ecto, "~> 2.0.0"}
-
     ]
   end
 

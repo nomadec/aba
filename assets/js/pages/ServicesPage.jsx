@@ -7,7 +7,6 @@ import MainLayout from "../Layouts/MainLayout";
 const ServicesPage = () => {
   return (
     <MainLayout>
-      <Link to={URL_PATHS.SERVICE_CREATE}>Create Service</Link>
       <ServicesList />
     </MainLayout>
   );

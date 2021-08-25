@@ -1,0 +1,188 @@
+.services_list {
+  margin-top: 10px;
+}
+
+.services_list .search_bar {
+  margin-bottom: 10px;
+  padding: 0 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: "center";
+      -ms-flex-align: "center";
+          align-items: "center";
+}
+
+.services_list .create_service_btn {
+  width: 48px;
+  height: 48px;
+  margin-left: 20px;
+  padding: 4px 0;
+  vertical-align: middle;
+}
+
+.services_list .categories_container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: auto;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.services_list .categories_container .category_box {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+.services_list .categories_container .category_box .category_icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #f7f4f9;
+}
+
+.services_list .categories_container .category_box .category_icon button {
+  padding: 4px;
+  color: black;
+}
+
+.services_list .categories_container .category_box .category_icon_label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.services_list .categories_container .active .category_icon_label {
+  color: #a7a0db;
+  font-weight: 700;
+}
+
+.services_list .categories_container .active .category_icon button span {
+  color: #a7a0db;
+}
+
+.services_list .services_list__body {
+  padding: 0 15px;
+  border-radius: 16px 16px 0 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+.services_list .services_list__body .filter_icon {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.services_list .services_list__body .rotate {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.services_list .services_list__body .filter_price_range {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.services_list .services_list__body .filter_price_range .filter_price_range_header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.services_list .services_list__body .filter_price_range .filter_price_range_header button {
+  text-transform: capitalize;
+}
+
+.services_list .services_list__body .services_list_header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.services_list .services_list__body .service_cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.services_list .services_list__body .services_pagination {
+  margin: 20px auto;
+  padding-bottom: 90px;
+}
+
+.services_list .services_list__body .services_pagination nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.service_editable_form {
+  min-height: 100vh;
+  margin-top: 20px;
+  padding: 20px 15px 70px;
+  border-radius: 16px 16px 0 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+.service_editable_form .service_editable_form_paper {
+  margin-top: 20px;
+  background-color: #fdfdfd00;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+/*# sourceMappingURL=ServicesList.css.map */

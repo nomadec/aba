@@ -1,0 +1,138 @@
+.services_list {
+  margin-top: 10px;
+
+  .search_bar {
+    margin-bottom: 10px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: "center";
+    // borderRadius: "16px 16px 0 0",
+    // border: "solid 1px black",
+    // boxShadow: "0 0 0 16px #fff",
+    // box-shadow: 0 0 0 13px #333;
+    // marginTop: -100,
+  }
+
+  .create_service_btn {
+    width: 48px;
+    height: 48px;
+    margin-left: 20px;
+    padding: 4px 0;
+    vertical-align: middle;
+  }
+
+  .categories_container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+
+    .category_box {
+      flex-shrink: 0;
+      width: 70px;
+      height: 70px;
+      margin: 10px;
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(5px);
+
+      .category_icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        // background-color: #cfadd9;
+        // background-color: #a7a0db;
+        background-color: #f7f4f9;
+        button {
+          padding: 4px;
+          color: black;
+        }
+      }
+      .category_icon_label {
+        // padding-top: 4px;
+        font-size: 11px;
+        font-weight: 500;
+      }
+    }
+
+    .active .category_icon_label {
+      // color: #9d5fde;
+      color: #a7a0db;
+      font-weight: 700;
+    }
+    .active .category_icon button span {
+      color: #a7a0db;
+    }
+  }
+
+  .services_list__body {
+    padding: 0 15px;
+    border-radius: 16px 16px 0 0;
+    // backgroundColor: "#f7f4f9";
+    // backgroundColor: "rgba(255, 255, 255, 0.15)",
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(5px);
+
+    .filter_icon {
+      transition: 0.4s;
+    }
+    .rotate {
+      transform: rotate(180deg);
+    }
+
+    .filter_price_range {
+      display: flex;
+      flex-direction: column;
+      .filter_price_range_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button {
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    .services_list_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .service_cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+    .services_pagination {
+      margin: 20px auto;
+      padding-bottom: 90px;
+      nav {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.service_editable_form {
+  min-height: 100vh;
+  margin-top: 20px;
+  padding: 20px 15px 70px;
+  border-radius: 16px 16px 0 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(5px);
+
+  .service_editable_form_paper {
+    margin-top: 20px;
+    background-color: #fdfdfd00;
+    box-shadow: none;
+  }
+}

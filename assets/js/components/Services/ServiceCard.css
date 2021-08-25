@@ -1,0 +1,112 @@
+.shadow {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px 0px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px 0px;
+}
+
+.service_card {
+  max-width: 420px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 3fr 1fr;
+      grid-template-columns: 1fr 3fr 1fr;
+  -ms-grid-rows: 1fr 1fr 1fr 1fr 2fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
+      grid-template-areas: "title title price" "image provider provider" "image duration duration" "image location location" "desc desc desc";
+  -webkit-column-gap: 4px;
+          column-gap: 4px;
+  background-color: #f7f4f9;
+  border-radius: 16px;
+  margin-top: 20px;
+  padding: 12px;
+}
+
+.service_card :hover {
+  cursor: pointer;
+}
+
+.service_card__title {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: title;
+  font-weight: 700;
+  text-overflow: clip;
+}
+
+.service_card__price {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: price;
+  text-align: right;
+  font-weight: 700;
+}
+
+.service_card__image {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 3;
+  -ms-grid-column: 1;
+  grid-area: image;
+}
+
+.service_card__image img {
+  width: 92px;
+  height: 70px;
+  border-radius: 16px;
+}
+
+.service_card__provider {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 2;
+  grid-area: provider;
+}
+
+.service_card__duration {
+  -ms-grid-row: 3;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 2;
+  grid-area: duration;
+}
+
+.service_card__location {
+  -ms-grid-row: 4;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 2;
+  grid-area: location;
+}
+
+.service_card__provider,
+.service_card__duration,
+.service_card__location {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.service_card__provider span :first-child,
+.service_card__duration span :first-child,
+.service_card__location span :first-child {
+  padding: 4px;
+}
+
+.service_card__desc {
+  -ms-grid-row: 5;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: desc;
+  font-size: 12px;
+}
+
+.trunc_desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/*# sourceMappingURL=ServiceCard.css.map */

@@ -1,5 +1,6 @@
 // export const HOST = "https://aba.gigalixirapp.com";
-export const HOST = "http://localhost:4000";
+// export const HOST = "http://localhost:4000";
+export const HOST = "http://192.168.0.104:4000";
 export const API = `${HOST}/api/v1`;
 
 export const API_SERVICES = `${API}/services`;
@@ -15,6 +16,10 @@ export const URL_PATHS = {
   APPOINTMENTS: "/appointments",
   APPOINTMENT_SHOW: "/appointments/show",
   APPOINTMENT_EDIT: "/appointments/edit",
+
+  FAVORITES: "/favorites",
+
+  CHAT: "/chat",
 
   SIGN_UP: "/signup",
   CONFIRM_EMAIL: "/confirm-email/:confirmation_token",
@@ -78,9 +83,16 @@ export const ROLE_CONSUMER = "consumer";
 export const ROLE_PROVIDER = "provider";
 
 export const SERVICE_CATEGORIES = [
-  { value: "healthcare", label: "Healthcare" },
-  { value: "beauty", label: "Beauty" },
-  { value: "all", label: "Show all" },
+  { value: "all", label: "All", icon: "apps" },
+  { value: "healthcare", label: "Healthcare", icon: "local_hospital" },
+  { value: "fitness", label: "Fitness", icon: "fitness_center" },
+  { value: "beauty", label: "Beauty", icon: "Spa", icon: "brush" },
+  { value: "swimming_pool", label: "Pool", icon: "pool" },
+  { value: "restaurant", label: "Restaurant", icon: "restaurant" },
+  { value: "activities", label: "Activities", icon: "sports_tennis" },
+  // { value: "entertainment", label: "Entertainment" },
+  // { value: "education", label: "Education" },
+  // { value: "repair", label: "Repair" },
 ];
 
 export const PER_PAGE = 5;

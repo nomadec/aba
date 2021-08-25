@@ -1,9 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
+import { Business, LocationOnOutlined, Schedule } from "@material-ui/icons";
+import { Icon } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,47 +28,32 @@ const ServiceCard = ({ service, handleShow, handleEdit, handleDelete }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          <Grid item>
-            <ButtonBase
-              className={classes.image}
-              onClick={() => handleShow(service.id)}
-            >
-              <img
-                className={classes.img}
-                alt="complex"
-                src="https://material-ui.com/static/images/grid/complex.jpg"
-              />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
-                  {service.name}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Full resolution 1920x1080 • JPEG
-                  {/* {service.description} */}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {service.location}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="body2" style={{ cursor: "pointer" }}>
-                  Remove
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1">${service.price}</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
+    <div className="service_card shadow" onClick={() => handleShow(service.id)}>
+      {/* <div className="service_card__header"></div> */}
+      <div className="service_card__image">
+        <img alt="complex" src={service.image} />
+      </div>
+      <div className="service_card__title">{service.name}</div>
+      <div className="service_card__provider">
+        <Icon>
+          <Business />
+        </Icon>
+        <span>{service.provider_first_name}</span>
+      </div>
+      <div className="service_card__duration">
+        <Icon>
+          <Schedule />
+        </Icon>
+        <span>{service.duration}min</span>
+      </div>
+      <div className="service_card__location">
+        <Icon>
+          <LocationOnOutlined />
+        </Icon>
+        <div>{service.location}</div>
+      </div>
+      <div className="service_card__price">${service.price}</div>
+      <div className="service_card__desc trunc_desc">{service.description}</div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import NotificationsBar from "../components/Notifications/NotificationsBar";
 import { useAuth } from "../contexts/AuthContext";
@@ -18,8 +19,8 @@ const MainLayout = ({ children }) => {
   return (
     <DataContextProvider>
       <Header />
-      <div>{children}</div>
-      <div>Footer</div>
+      {children}
+      <Footer />
       <NotificationsBar />
     </DataContextProvider>
   );

@@ -119,7 +119,6 @@ const SignUp = () => {
                   <FormControl
                     variant="outlined"
                     required
-                    className={classes.formControl}
                     style={{ width: "100%" }}
                   >
                     <InputLabel id="role_label">Role</InputLabel>

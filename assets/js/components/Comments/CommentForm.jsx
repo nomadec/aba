@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -38,7 +39,9 @@ const CommentForm = ({ handleSubmit, bodyLabel, comment, buttonLabel }) => {
         value={newComment.content}
         onChange={handleChange}
       />
-      <button onClick={handleClick}>{buttonLabel}</button>
+      <div style={{ textAlign: "right" }}>
+        <Button onClick={handleClick}>{buttonLabel}</Button>
+      </div>
     </form>
   );
 };

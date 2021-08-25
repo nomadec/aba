@@ -47,7 +47,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import Routes from "./routes/Routes";
 import AuthContextProvider from "./contexts/AuthContext";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import { createTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
 
 const theme = createTheme({
   palette: {
@@ -84,6 +84,7 @@ const theme = createTheme({
 
 ReactDOM.render(
   <AuthContextProvider csrfToken={csrfToken}>
+    <CssBaseline />
     <ThemeProvider theme={theme}>
       <Routes />
     </ThemeProvider>

@@ -17,7 +17,7 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={URL_PATHS.HOME} component={HomePage} />
+        <Route exact path={URL_PATHS.HOME} component={ServicesPage} />
         <Route exact path={URL_PATHS.SERVICES} component={ServicesPage} />
         <Route
           exact
@@ -40,6 +40,16 @@ const Routes = () => {
         <ProtectedRoute
           exact
           path={URL_PATHS.APPOINTMENTS}
+          component={AppointmentsPage}
+        />
+        <ProtectedRoute
+          exact
+          path={URL_PATHS.CHAT}
+          component={AppointmentsPage}
+        />
+        <ProtectedRoute
+          exact
+          path={URL_PATHS.FAVORITES}
           component={AppointmentsPage}
         />
 

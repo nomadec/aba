@@ -1,0 +1,359 @@
+/* This file is for your main application css. */
+@import url(/Users/m1mac/GitHub/aba/assets/js/components/Services/ServiceCard.css);
+@import url(/Users/m1mac/GitHub/aba/assets/js/components/Appointments/Appointments.css);
+.services_list {
+  margin-top: 10px;
+}
+
+.services_list .search_bar {
+  margin-bottom: 10px;
+  padding: 0 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: "center";
+      -ms-flex-align: "center";
+          align-items: "center";
+}
+
+.services_list .create_service_btn {
+  width: 48px;
+  height: 48px;
+  margin-left: 20px;
+  padding: 4px 0;
+  vertical-align: middle;
+}
+
+.services_list .categories_container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: auto;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.services_list .categories_container .category_box {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+.services_list .categories_container .category_box .category_icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #f7f4f9;
+}
+
+.services_list .categories_container .category_box .category_icon button {
+  padding: 4px;
+  color: black;
+}
+
+.services_list .categories_container .category_box .category_icon_label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.services_list .categories_container .active .category_icon_label {
+  color: #a7a0db;
+  font-weight: 700;
+}
+
+.services_list .categories_container .active .category_icon button span {
+  color: #a7a0db;
+}
+
+.services_list .services_list__body {
+  padding: 0 15px;
+  border-radius: 16px 16px 0 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+.services_list .services_list__body .filter_icon {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.services_list .services_list__body .rotate {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.services_list .services_list__body .filter_price_range {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.services_list .services_list__body .filter_price_range .filter_price_range_header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.services_list .services_list__body .filter_price_range .filter_price_range_header button {
+  text-transform: capitalize;
+}
+
+.services_list .services_list__body .services_list_header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.services_list .services_list__body .service_cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.services_list .services_list__body .services_pagination {
+  margin: 20px auto;
+  padding-bottom: 90px;
+}
+
+.services_list .services_list__body .services_pagination nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.service_show_page {
+  margin-top: 20px;
+  padding: 0 15px 20px;
+  border-radius: 16px 16px 0 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+.service_show_page .appointment_datetime {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.service_show_page .appointment_datetime .DateInput_input {
+  font-size: 14px;
+  padding: 8px;
+  border: none !important;
+}
+
+.service_show_page .appointment_datetime .time_input input {
+  font-size: 14px;
+  padding: 8px;
+  background-color: #fff;
+  border: none;
+  line-height: 24px;
+}
+
+.calendar_hours {
+  width: 100%;
+  padding: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-bottom: 10px;
+  border: solid 1px black;
+}
+
+.calendar_hours .calendar_hours_block {
+  width: 80px;
+  height: 30px;
+  margin: 4px;
+}
+
+.calendar_hours .closed {
+  background-color: #5c5168;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: linear-gradient(135deg, #cbaddc 0%, #a0a5de 25%, #758edb 51%, #a0a5de 75%, #cbaddc 100%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.go_back_icon_button {
+  padding: 10px;
+  width: 32px;
+  height: 32px;
+  background-color: #fff !important;
+}
+
+.glass {
+  background-color: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+#root {
+  background-color: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+/* LiveView specific classes for your customizations */
+.phx-no-feedback.invalid-feedback,
+.phx-no-feedback .invalid-feedback {
+  display: none;
+}
+
+.phx-click-loading {
+  opacity: 0.5;
+  -webkit-transition: opacity 1s ease-out;
+  transition: opacity 1s ease-out;
+}
+
+.phx-disconnected {
+  cursor: wait;
+}
+
+.phx-disconnected * {
+  pointer-events: none;
+}
+
+.phx-modal {
+  opacity: 1 !important;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.phx-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.phx-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.phx-modal-close:hover,
+.phx-modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Alerts and form errors */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert p {
+  margin-bottom: 0;
+}
+
+.alert:empty {
+  display: none;
+}
+
+.invalid-feedback {
+  color: #a94442;
+  display: block;
+  margin: -1rem 0 2rem;
+}
+/*# sourceMappingURL=app.css.map */

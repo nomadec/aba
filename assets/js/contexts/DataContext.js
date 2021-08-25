@@ -9,6 +9,7 @@ import {
   COMMENTS_GET,
   LOADING_STARTED,
   PER_PAGE,
+  ROLE_PROVIDER,
   SERVICES_CREATE,
   SERVICES_DROP_DETAILS,
   SERVICES_GET,
@@ -123,6 +124,7 @@ const DataContextProvider = ({ children }) => {
     const resp = await supervise_rq(() =>
       axios(`${API_PATHS.SERVICES}/${window.location.search}`)
     );
+    console.log(resp);
 
     if (resp.status === STATUS.SUCCESS) {
       dispatch({
@@ -214,8 +216,18 @@ const DataContextProvider = ({ children }) => {
 
   // fetch list of Appointments from API
   async function getAppointments() {
+    // need to add a validation to request data that user is allowed to view
+    // if user role is provider, then get appointments that are linked to Services of this provider
+    // if user role is consumer, then get appointments that are linked to this user_id
+    // let params;
+    // if (user.role === ROLE_PROVIDER) {
+    //   params =
+    // }
+
     dispatch({ type: LOADING_STARTED });
     const resp = await supervise_rq(() => axios(API_PATHS.APPOINTMENTS));
+
+    console.log(resp);
 
     if (resp.status === STATUS.SUCCESS) {
       dispatch({
@@ -315,6 +327,7 @@ const DataContextProvider = ({ children }) => {
     services: state.services,
     serviceDetails: state.serviceDetails,
     servicesTotalPages: state.servicesTotalPages,
+    servicesTotalCount: state.servicesTotalCount,
     servicesFilters: state.servicesFilters,
     appointments: state.appointments,
     appointmentDetails: state.appointmentDetails,

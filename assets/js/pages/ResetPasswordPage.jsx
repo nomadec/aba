@@ -1,12 +1,12 @@
 import React from "react";
 import ResetPassword from "../components/Auth/ResetPassword";
-import AuthLayout from "../Layouts/AuthLayout";
+import BaseLayout from "../Layouts/BaseLayout";
 
 const ResetPasswordPage = () => {
   return (
-    <AuthLayout>
+    <BaseLayout>
       <ResetPassword />
-    </AuthLayout>
+    </BaseLayout>
   );
 };
 
