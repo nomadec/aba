@@ -1,15 +1,16 @@
 defmodule Aba.Services.Service do
   use Aba.Schema
   import Ecto.Changeset
-  use Rummage.Ecto
 
   @derive {Jason.Encoder, only: [:id, :name, :price, :duration, :location, :description]}
   schema "services" do
     field :name, :string
-    field :price, :float
+    field :category, :string
     field :duration, :integer
+    field :price, :float
     field :location, :string
     field :description, :string
+    field :image, :string
     belongs_to :user, Aba.Users.User
     has_many :appointments, Aba.Appointments.Appointment
 
@@ -19,36 +20,41 @@ defmodule Aba.Services.Service do
   @doc false
   def changeset(service, attrs) do
     service
-    |> cast(attrs, [:name, :price, :duration, :location, :description, :user_id])
-    |> validate_required([:name, :price, :duration, :location, :description, :user_id])
+    |> cast(attrs, [:name, :category, :duration, :price, :location, :description, :image, :user_id])
+    |> validate_required([:name, :category, :duration, :price, :location, :description, :image, :user_id])
   end
 
-#   rummage = [
-#     search: [name: [search_type: :like, search_term: "1"]],
-#     sort: [field: :name, order: :asc],
-#     paginate: [per_page: 2, page: 1]
-#   ]
-# rummage = [search: [name: [search_type: :like, search_term: "1"]]]
+  def init_db do
+    case Aba.Services.list_services do
+      [] ->
+        do_init_db()
+      _ ->
+        false;
+    end
+  end
+  def do_init_db() do
+    data = [
+      %{
+        name: "",
+        price: 1.5,
+        duration: 30,
+        location: "",
+        description: "",
+        category: ""
+      },
 
-# {queryable, rummage} = Aba.Services.Service.rummage(Aba.Services.Service, rummage)
 
-  # {queryable, rummage} = %Aba.Services.Service{} |> Rummage.Ecto.rummage(rummage)
+      %{"email" => "bado@email.com", "password" => "12345678", "password_confirmation" => "12345678", "first_name" => "B", "last_name" => "K", "role" => "guest"},
+      %{"email" => "mike@email.com", "password" => "12345678", "password_confirmation" => "12345678", "first_name" => "M", "last_name" => "V", "role" => "guest"},
+      %{"email" => "umid@email.com", "password" => "12345678", "password_confirmation" => "12345678", "first_name" => "U", "last_name" => "K", "role" => "guest"}
+    ]
 
-  # products = queryable |> Aba.Repo.all
-
-# rummage = %{search: %{:name => %{search_type: :like, search_term: "field_!"}}, sort: %{field: :field1, order: :asc}, paginate: %{per_page: 2, page: 1}}
-# {queryable, rummage} = Service |> Rummage.Ecto.rummage(rummage, repo: Aba.Repo, per_page: 2, search: Rummage.Ecto.Hook.Search, sort: Rummage.Ecto.Hook.Sort, paginate: Rummage.Ecto.Hook.Paginate)
-
-
-# params = %{"q" => %{"name_and_location_like" => "elixir"}, "s" => "inserted_at+asc", "page" => 0, "per_page" => 2}
-# params = %{"s" => "inserted_at+asc", "page" => 0, "per_page" => 2}
-# Turbo.Ecto.turbo(Turbo.Ecto.Schemas.Aba.Services.Service, params)
-# Turbo.Ecto.turboq(Aba.Services.Service, params)
-
-# %{repo: nil,
-#           per_page: 10,
-#           search: Rummage.Ecto.Hook.Search,
-#           sort: Rummage.Ecto.Hook.Sort,
-#           paginate: Rummage.Ecto.Hook.Paginate
+    Enum.map(data, fn user ->
+      Hotelverse.Users.create(user)
+      # Pow.Ecto.Context.create(user)
+      # pow_create
+      # Pow.Plug.create_user(%{private: %{}}, user)
+    end)
+  end
 
 end

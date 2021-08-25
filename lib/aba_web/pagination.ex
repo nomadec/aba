@@ -13,12 +13,13 @@ defmodule AbaWeb.Pagination do
     |> Repo.all()
   end
 
-  def page(query, page, per_page: per_page) when is_binary(page) do
-    query(query, String.to_integer(page), per_page: per_page)
+  def page(query, preloads, page, per_page: per_page) when is_binary(page) do
+    page(query, preloads, String.to_integer(page), per_page: per_page)
   end
 
-  def page(query, page, per_page: per_page) when is_integer(page) do
-    results = query(query, page, per_page: per_page)
+  def page(query, preloads, page, per_page: per_page) when is_integer(page) do
+    query1 = preload(query, ^preloads)
+    results = query(query1, page, per_page: per_page)
     has_next = length(results) > per_page
     has_prev = page > 1
     count = Repo.one(from(t in subquery(query), select: count("*")))
@@ -36,6 +37,7 @@ defmodule AbaWeb.Pagination do
       list: Enum.slice(results, 0, per_page)
     }
   end
+
 
   # alias Aba.Repo
   # alias Aba.Comments.Comment

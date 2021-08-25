@@ -1,10 +1,19 @@
-import { Button, Container, Paper, TextField } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+} from "@material-ui/core";
 import React from "react";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { useData } from "../../contexts/DataContext";
-import { URL_PATHS } from "../../helpers/consts";
+import { SERVICE_CATEGORIES, URL_PATHS } from "../../helpers/consts";
 import ServiceDetails from "./ServiceDetails";
 
 const ServiceForm = ({ action }) => {
@@ -14,10 +23,16 @@ const ServiceForm = ({ action }) => {
     loading,
     createService,
     editService,
+    deleteService,
     getServiceDetails,
     serviceDetails,
     dropServiceDetails,
+    createComment,
+    getComments,
+    comments,
+    verifyOwnership,
   } = useData();
+
   const {
     control,
     handleSubmit,
@@ -45,6 +60,7 @@ const ServiceForm = ({ action }) => {
   useEffect(() => {
     if (action === "show" || action === "edit") {
       getServiceDetails(id);
+      getComments(id);
     }
 
     return () => {
@@ -57,8 +73,8 @@ const ServiceForm = ({ action }) => {
       const newService = await createService(formData);
       handleShow(newService.id);
     } else if (action === "edit") {
-      editService(id, formData);
-      dropServiceDetails();
+      await editService(id, formData);
+      await dropServiceDetails();
       handleShow(id);
     }
   }
@@ -73,110 +89,154 @@ const ServiceForm = ({ action }) => {
   const renderViewForm = loading ? (
     <div>loading...</div>
   ) : (
-    <>
-      <div>
-        <h4>{form.title}</h4>
-        <p>{serviceDetails.name}</p>
-        <p>{serviceDetails.price}</p>
-        <p>{serviceDetails.duration}</p>
-        <p>{serviceDetails.location}</p>
-        <p>{serviceDetails.description}</p>
-        <button onClick={() => handleEdit(id)}>Edit</button>
-      </div>
-      <ServiceDetails />
-    </>
+    <ServiceDetails
+      serviceDetails={serviceDetails}
+      handleEdit={handleEdit}
+      handleDelete={deleteService}
+      createComment={createComment}
+      comments={comments}
+      verifyOwnership={verifyOwnership}
+    />
   );
 
   const renderEditableForm = loading ? (
-    <p>loading... {console.log("loading", serviceDetails)}</p>
+    <p>loading...</p>
   ) : (
-    <Paper>
-      {console.log("loaded", serviceDetails)}
-      <Container>
-        <h4>{form.title}</h4>
-        <form noValidate autoComplete="off" onSubmit={handleSubmit(submitForm)}>
-          <Controller
-            name="name"
-            required={true}
-            control={control}
-            defaultValue={form.editMode && serviceDetails.name}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                name="name"
-                variant="outlined"
-                label="Service Name"
-                style={{ marginBottom: 10 }}
-              />
-            )}
-          />
-          <Controller
-            name="price"
-            required={true}
-            control={control}
-            defaultValue={form.editMode && serviceDetails.price}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                name="price"
-                variant="outlined"
-                label="Price"
-                style={{ marginBottom: 10 }}
-              />
-            )}
-          />
-          <Controller
-            name="duration"
-            required={true}
-            control={control}
-            defaultValue={form.editMode && serviceDetails.duration}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                name="duration"
-                variant="outlined"
-                label="Duration"
-                style={{ marginBottom: 10 }}
-              />
-            )}
-          />
-          <Controller
-            name="location"
-            required={true}
-            control={control}
-            defaultValue={form.editMode && serviceDetails.location}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                name="location"
-                variant="outlined"
-                label="Location"
-                style={{ marginBottom: 10 }}
-              />
-            )}
-          />
-          <Controller
-            name="description"
-            required={true}
-            control={control}
-            defaultValue={form.editMode && serviceDetails.description}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                name="description"
-                variant="outlined"
-                label="Description"
-                style={{ marginBottom: 10 }}
-              />
-            )}
-          />
+    <div className="service_editable_form">
+      <Paper className="service_editable_form_paper">
+        <Container>
+          <form
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit(submitForm)}
+          >
+            <Controller
+              name="name"
+              required={true}
+              control={control}
+              defaultValue={form.editMode && serviceDetails.name}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  name="name"
+                  variant="outlined"
+                  label="Service Name"
+                  style={{ marginBottom: 10 }}
+                />
+              )}
+            />
 
-          <Button variant="contained" color="secondary" type="submit">
-            {form.button}
-          </Button>
-        </form>
-      </Container>
-    </Paper>
+            <Controller
+              name="category"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <FormControl
+                  variant="outlined"
+                  required
+                  style={{ width: 195, marginBottom: 10 }}
+                >
+                  <InputLabel id="category_label">Category</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="category_label"
+                    id="category"
+                    label="category"
+                  >
+                    {SERVICE_CATEGORIES.map((cat) => (
+                      <MenuItem key={cat.value} value={cat.value}>
+                        {cat.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
+
+            <Controller
+              name="price"
+              required={true}
+              control={control}
+              defaultValue={form.editMode && serviceDetails.price}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  name="price"
+                  variant="outlined"
+                  label="Price $"
+                  style={{ marginBottom: 10 }}
+                />
+              )}
+            />
+            <Controller
+              name="duration"
+              required={true}
+              control={control}
+              defaultValue={form.editMode && serviceDetails.duration}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  name="duration"
+                  variant="outlined"
+                  label="Duration"
+                  style={{ marginBottom: 10 }}
+                />
+              )}
+            />
+            <Controller
+              name="location"
+              required={true}
+              control={control}
+              defaultValue={form.editMode && serviceDetails.location}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  name="location"
+                  variant="outlined"
+                  label="Location"
+                  style={{ marginBottom: 10 }}
+                />
+              )}
+            />
+
+            <Controller
+              name="image"
+              required={true}
+              control={control}
+              defaultValue={form.editMode && serviceDetails.image}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  name="image"
+                  variant="outlined"
+                  label="Image"
+                  style={{ marginBottom: 10 }}
+                />
+              )}
+            />
+            <Controller
+              name="description"
+              required={true}
+              control={control}
+              defaultValue={form.editMode && serviceDetails.description}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  name="description"
+                  variant="outlined"
+                  label="Description"
+                  style={{ marginBottom: 10 }}
+                />
+              )}
+            />
+
+            <Button variant="contained" color="secondary" type="submit">
+              {form.button}
+            </Button>
+          </form>
+        </Container>
+      </Paper>
+    </div>
   );
 
   return form.editable ? renderEditableForm : renderViewForm;

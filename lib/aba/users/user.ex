@@ -4,6 +4,8 @@ defmodule Aba.Users.User do
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
 
+
+  @derive {Jason.Encoder, only: [:id, :first_name, :last_name]}
   schema "users" do
     pow_user_fields()
     field :role, :string, null: false, default: "consumer"

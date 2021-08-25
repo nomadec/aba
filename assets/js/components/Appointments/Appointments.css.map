@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,kBAAkB,CAAC;EACjB,UAAU,EAAE,KAAK;EACjB,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,cAAc;EACvB,aAAa,EAAE,aAAa;EAC5B,gBAAgB,EAAE,yBAAyB;EAC3C,eAAe,EAAE,SAAS;CAK3B;;AAXD,AAQE,kBARgB,CAQhB,KAAK,CAAC;EACJ,SAAS,EAAE,IAAI;CAChB",
+    "sources": [
+        "Appointments.scss"
+    ],
+    "names": [],
+    "file": "Appointments.css"
+}

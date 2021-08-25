@@ -1,92 +1,28 @@
-import { alpha, InputBase, makeStyles } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import React from "react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useData } from "../../contexts/DataContext";
-import { PER_PAGE, URL_PATHS } from "../../helpers/consts";
-import SearchIcon from "@material-ui/icons/Search";
+import { URL_PATHS } from "../../helpers/consts";
 import { Pagination } from "@material-ui/lab";
 import { useState } from "react";
 import ServiceCard from "./ServiceCard";
-import ServicesFilterbar from "./ServicesFilterbar";
-
-const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
-    },
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
-  },
-}));
+import { FilterList } from "@material-ui/icons";
+import Searchbar from "./Searchbar";
+import ServicesFilterbarCategory from "./ServicesFilterbarCategory";
+import ServicesFilterbarPrice from "./ServicesFilterbarPrice";
 
 const ServicesList = () => {
-  const { getServices, deleteService, services, servicesTotalPages } =
-    useData();
+  const {
+    getServices,
+    deleteService,
+    services,
+    servicesTotalPages,
+    servicesTotalCount,
+  } = useData();
   const [currentPage, setCurrentPage] = useState(getCurrentPage());
+  const [filterShown, setFilterShown] = useState(false);
   const history = useHistory();
-
-  const classes = useStyles();
-  const handleValue = (e) => {
-    const search = new URLSearchParams(history.location.search);
-    search.set("_q", e.target.value);
-    history.push(`${history.location.pathname}?${search.toString()}`);
-    getServices();
-  };
 
   useEffect(() => {
     getServices();
@@ -122,86 +58,60 @@ const ServicesList = () => {
   }
 
   return (
-    <div>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
+    <div id="services_list" className="services_list">
+      {/* Searchbar */}
+      <Searchbar />
+
+      {/* Categories box picker */}
+      <ServicesFilterbarCategory />
+
+      {/* List of Services */}
+      <div className="services_list__body">
+        <div className="services_list_header">
+          <div>
+            <h3>{`${servicesTotalCount} ${
+              servicesTotalCount === 1 ? "Offer" : "Offers"
+            } Found`}</h3>
+          </div>
+          <div onClick={() => setFilterShown(!filterShown)}>
+            <IconButton>
+              {filterShown ? (
+                <FilterList className="filter_icon rotate" />
+              ) : (
+                <FilterList className="filter_icon" />
+              )}
+            </IconButton>
+          </div>
         </div>
-        <InputBase
-          placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ "aria-label": "search" }}
-          onChange={(e) => handleValue(e)}
-        />
-      </div>
+        <ServicesFilterbarPrice filterShown={filterShown} />
 
-      <ServicesFilterbar />
+        <div className="service_cards">
+          {services.length === 0 ? (
+            <p>No Records Found</p>
+          ) : (
+            services.map((item) => (
+              <ServiceCard
+                key={item.id}
+                service={item}
+                handleShow={handleShow}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            ))
+          )}
+        </div>
 
-      <h1>Catalogue</h1>
-      {services.length === 0 ? (
-        <p>No Records Found</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Location</th>
-              <th>Duration</th>
-              <th>Description</th>
-              <th>Provider</th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {services.map((item) => (
-              <tr key={item.id}>
-                <td style={{ columnSpan: 6 }}>
-                  <ServiceCard
-                    key={item.id}
-                    service={item}
-                    handleShow={handleShow}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
-                  />
-                </td>
-              </tr>
-              // <tr key={item.id}>
-              //   <td>{item.name}</td>
-              //   <td>{item.price}</td>
-              //   <td>{item.location}</td>
-              //   <td>{item.duration}</td>
-              //   <td>{item.description}</td>
-              //   <td>{item.user_id}</td>
-              //   <td>
-              //     <button onClick={() => handleShow(item.id)}>Show</button>
-              //   </td>
-              //   <td>
-              //     <button onClick={() => handleEdit(item.id)}>Edit</button>
-              //   </td>
-              //   <td>
-              //     <button onClick={() => handleDelete(item.id)}>Delete</button>
-              //   </td>
-              // </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      <div style={{ margin: "20px auto" }}>
-        <Pagination
-          count={servicesTotalPages}
-          color="primary"
-          page={+currentPage}
-          onChange={handlePage}
-          shape="rounded"
-          showFirstButton
-          showLastButton
-        />
+        <div className="services_pagination">
+          <Pagination
+            count={servicesTotalPages}
+            color="primary"
+            page={+currentPage}
+            onChange={handlePage}
+            shape="rounded"
+            showFirstButton
+            showLastButton
+          />
+        </div>
       </div>
     </div>
   );

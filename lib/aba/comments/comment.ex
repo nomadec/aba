@@ -2,6 +2,7 @@ defmodule Aba.Comments.Comment do
   use Aba.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :content]}
   schema "comments" do
     belongs_to :user, Aba.Users.User
     belongs_to :service, Aba.Services.Service

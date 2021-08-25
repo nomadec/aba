@@ -10,8 +10,21 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :aba, AbaWeb.Endpoint,
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  http: [:inet6, port: System.get_env("PORT") || 4000], # Needed for Phoenix 1.2 and 1.4. Doesn't hurt for 1.3.
+  url: [host: "${APP_NAME}.gigalixirapp.com", port: 443],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true, # Without this line, your app will not start the web server!
+  root: ".",
+  load_from_system_env: true, # Needed for Phoenix 1.3. Doesn't hurt for other versions
+  secret_key_base: "${SECRET_KEY_BASE}",
+  version: Mix.Project.config[:version] # To bust cache during hot upgrades
+
+config :aba, Aba.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: "${DATABASE_URL}",
+  database: "", # Works around a bug in older versions of ecto. Doesn't hurt for other versions.
+  ssl: true,
+  pool_size: 2 # Free tier db only allows 4 connections. Rolling deploys need pool_size*(n+1) connections where n is the number of app replicas.
 
 # Do not print debug messages in production
 config :logger, level: :info

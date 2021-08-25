@@ -25,7 +25,7 @@ function TransitionDown(props) {
 //  inform about some event status and/or update to user
 //  in order to watch for new messages, add another useEffect and define which variable you wish to depend on
 const NotificationsBar = () => {
-  const { status, message } = useAuth();
+  const { status, message, cleanupAuthState } = useAuth();
   const [open, setOpen] = useState(false);
   const [transition, setTransition] = useState(undefined);
 
@@ -36,6 +36,7 @@ const NotificationsBar = () => {
   }, [message]);
 
   function handleClose() {
+    cleanupAuthState();
     setOpen(false);
   }
 

@@ -11,8 +11,12 @@ defmodule AbaWeb.AppointmentView do
   end
 
   def render("appointment.json", %{appointment: appointment}) do
-    %{id: appointment.id,
+    %{
+      id: appointment.id,
       date_time: appointment.date_time,
-      paid: appointment.paid}
+      paid: appointment.paid,
+      service: appointment.service,
+      user: appointment.user
+    }
   end
 end

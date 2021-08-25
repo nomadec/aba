@@ -1,0 +1,12 @@
+.appointments_list {
+  min-height: 100vh;
+  margin-top: 20px;
+  padding: 20px 15px 70px;
+  border-radius: 16px 16px 0 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(5px);
+
+  tbody {
+    font-size: 13px;
+  }
+}

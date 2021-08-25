@@ -1,0 +1,60 @@
+.service_show_page {
+  margin-top: 20px;
+  padding: 0 15px 20px;
+  border-radius: 16px 16px 0 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+
+.service_show_page .appointment_datetime {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.service_show_page .appointment_datetime .DateInput_input {
+  font-size: 14px;
+  padding: 8px;
+  border: none !important;
+}
+
+.service_show_page .appointment_datetime .time_input input {
+  font-size: 14px;
+  padding: 8px;
+  background-color: #fff;
+  border: none;
+  line-height: 24px;
+}
+
+.calendar_hours {
+  width: 100%;
+  padding: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-bottom: 10px;
+  border: solid 1px black;
+}
+
+.calendar_hours .calendar_hours_block {
+  width: 80px;
+  height: 30px;
+  margin: 4px;
+}
+
+.calendar_hours .closed {
+  background-color: #5c5168;
+}
+/*# sourceMappingURL=ServiceShowPage.css.map */

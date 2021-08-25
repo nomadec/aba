@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -15,10 +15,27 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Button, Icon, Paper, Tooltip } from "@material-ui/core";
+import {
+  Business,
+  DeleteForever,
+  Edit,
+  LocationOnOutlined,
+  Schedule,
+} from "@material-ui/icons";
+import CommentsList from "../Comments/CommentsList";
+import { useData } from "../../contexts/DataContext";
+import { useParams } from "react-router-dom";
+import CommentForm from "../Comments/CommentForm";
+import CommentCard from "../Comments/CommentCard";
+import { permittedRole } from "../../helpers/utils";
+import { useAuth } from "../../contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    backgroundColor: "#fdfdfd00",
+    boxShadow: "none",
   },
   media: {
     height: 0,
@@ -26,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   expand: {
     transform: "rotate(0deg)",
-    marginLeft: "auto",
+    // marginLeft: "auto",
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
@@ -34,14 +51,25 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    backgroundColor: red[500],
+
+  actionsBar: {
+    display: "flex",
+    justifyContent: "space-between",
   },
 }));
 
-const ServiceDetails = () => {
+const ServiceDetails = ({
+  serviceDetails,
+  handleEdit,
+  handleDelete,
+  handleFavorites,
+  createComment,
+  comments,
+  verifyOwnership,
+}) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const { user } = useAuth();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -49,80 +77,92 @@ const ServiceDetails = () => {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+      <div className="service_card">
+        {/* <div className="service_card__header"></div> */}
+        <div className="service_card__image">
+          <img
+            alt="complex"
+            src="https://material-ui.com/static/images/grid/complex.jpg"
+          />
+        </div>
+        <div className="service_card__title">{serviceDetails.name}</div>
+        <div className="service_card__provider">
+          <Icon>
+            <Business />
+          </Icon>
+          <span>{serviceDetails.provider_first_name}</span>
+        </div>
+        <div className="service_card__duration">
+          <Icon>
+            <Schedule />
+          </Icon>
+          <span>{serviceDetails.duration}min</span>
+        </div>
+        <div className="service_card__location">
+          <Icon>
+            <LocationOnOutlined />
+          </Icon>
+          <div>{serviceDetails.location}</div>
+        </div>
+        <div className="service_card__price">${serviceDetails.price}</div>
+        <div className="service_card__desc">{serviceDetails.description}</div>
+      </div>
+
+      <CardActions className={classes.actionsBar}>
+        <Tooltip title="Add service to your Favorites">
+          <IconButton
+            // color="secondary"
+            onClick={() => handleFavorites(serviceDetails.id)}
+          >
+            <Icon>
+              <FavoriteIcon />
+            </Icon>
           </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.media}
-        image="https://material-ui.com/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        </Tooltip>
+        {permittedRole(user, "provider") && verifyOwnership(serviceDetails) ? (
+          <>
+            <Tooltip title="Edit your service">
+              <IconButton
+                // color="secondary"
+                onClick={() => handleEdit(serviceDetails.id)}
+              >
+                <Icon>
+                  <Edit />
+                </Icon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete a service permanently">
+              <IconButton
+                // color="secondary"
+                onClick={() => handleDelete(serviceDetails.id)}
+              >
+                <Icon>
+                  <DeleteForever />
+                </Icon>
+              </IconButton>
+            </Tooltip>
+          </>
+        ) : null}
+        <Tooltip title="Read customer reviews and comments">
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-            chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-            onion, salt and pepper, and cook, stirring often until thickened and
-            fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2
-            cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is
-            absorbed, 15 to 18 minutes. Reduce heat to medium-low, add reserved
-            shrimp and mussels, tucking them down into the rice, and cook again
-            without stirring, until mussels have opened and rice is just tender,
-            5 to 7 minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
-        </CardContent>
+        <CommentsList
+          comments={comments}
+          createComment={createComment}
+          id={serviceDetails.id}
+        />
       </Collapse>
     </Card>
   );

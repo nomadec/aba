@@ -15,12 +15,18 @@ defmodule AbaWeb.ServiceView do
   end
 
   def render("service.json", %{service: service}) do
-    %{id: service.id,
+    %{
+      id: service.id,
       name: service.name,
+      category: service.category,
       user_id: service.user_id,
       price: service.price,
       duration: service.duration,
       location: service.location,
-      description: service.description}
+      description: service.description,
+      image: service.image,
+      provider_first_name: service.user.first_name,
+      provider_last_name: service.user.last_name
+    }
   end
 end

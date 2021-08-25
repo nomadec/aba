@@ -1,12 +1,12 @@
 import React from "react";
 import ServiceForm from "../components/Services/ServiceForm";
-import MainLayout from "../Layouts/MainLayout";
+import MainLayoutFooterLess from "../Layouts/MainLayoutFooterLess";
 
 const ServicesCreatePage = () => {
   return (
-    <MainLayout>
+    <MainLayoutFooterLess>
       <ServiceForm action={"new"} />
-    </MainLayout>
+    </MainLayoutFooterLess>
   );
 };
 
